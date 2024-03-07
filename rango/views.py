@@ -1,6 +1,10 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from rango.forms import UserForm,UserProfileForm
+from django.contrib.auth import authenticate, login
+from django.urls import reverse
+from django.shortcuts import redirect
+
 # Create your views here.
 def index(request):
     return render(request, 'rango/index.html')
@@ -39,3 +43,21 @@ def register(request):
                              'profile_form':profile_form, 
                              'registered':registered})
 
+def user_login(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        user = authenticate(username=username, password=password)
+
+        if user:
+            if user.is_active:
+                login(request, user)
+                return redirect(reverse('rango:index'))
+            else:
+                return HttpResponse("Your book finder account is disabled.")
+        else:
+            print(f"Invalid login details: {username}, {password}")
+            return HttpResponse("Invalid login details supplied.")
+    else:
+        return render(request, 'rango/login.html')

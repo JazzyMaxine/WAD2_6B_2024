@@ -1,10 +1,11 @@
-<!DOCTYPE html>
+{% extends 'rango/base.html' %}
 {% load staticfiles %}
-<html>
-<head>
-<title>Rango</title>
-</head>
-<body>
+
+{% block title_block %}
+    Register
+{% endblock %}
+
+{% block body_block %}
 <h1>Welcome to Rango Reading Platform</h1>
 <p>Please start reading and share with your friends!</p>
 
@@ -29,5 +30,4 @@
 <div>
 <a href="/help_support/">Help and Support</a><br />
 </div>
-</body>
-</html>
+{% endblock %}
