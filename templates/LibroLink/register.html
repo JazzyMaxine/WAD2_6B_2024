@@ -1,4 +1,4 @@
-{% extends 'rango/base.html' %}
+{% extends 'LibroLink/base.html' %}
 {% load staticfiles %}
 
 {% block title_block %}
@@ -9,10 +9,10 @@
 <h1>Register for 'insert application name'</h1>
 {% if registered %}
 <strong>Thank you for registering!</strong>
-<a href="{% url 'rango:index' %}">Return to the homepage</a><br />
+<a href="{% url 'LibroLink:index' %}">Return to the homepage</a><br />
 {% else %}
 <strong>Register here!</strong><br />
-<form id="user_form" method="post" action="{% url 'rango:register' %}" enctype="multipart/form-data">
+<form id="user_form" method="post" action="{% url 'LibroLink:register' %}" enctype="multipart/form-data">
     {% csrf_token %}
 
     {{ user_form.as_p }}
