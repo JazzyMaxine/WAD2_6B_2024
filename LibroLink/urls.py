@@ -5,5 +5,6 @@ app_name = 'LibroLink'
 
 urlpatterns = [
     path('', views.index, name='index'),
-    path('profile/', views.profile, name='profile'),
+    path('register/', views.register, name='register'),
+    path('login/', views.user_login, name='login'),
 ]

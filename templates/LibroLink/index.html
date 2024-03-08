@@ -1,10 +1,19 @@
-<!DOCTYPE html>
+{% extends 'LibroLink/base.html' %}
 {% load staticfiles %}
+<<<<<<< HEAD
 <html>
 <head>
 <title>LibroLink</title>
 </head>
 <body>
+=======
+
+{% block title_block %}
+    Register
+{% endblock %}
+
+{% block body_block %}
+>>>>>>> 0a2d65fe434e9a0d169862521441acbddc075658
 <h1>Welcome to LibroLink Reading Platform</h1>
 <p>Please start reading and share with your friends!</p>
 
@@ -13,7 +22,7 @@
         <li><a href="/">Home</a></li>
         <li><a href="/books/">Books</a></li>
         <li><a href="/user/">User Center</a></li>
-        
+        <li><a href="{% url 'LibroLink:register' %}">SignUp</a></li>
     </ul>
 </nav>
 
@@ -29,5 +38,4 @@
 <div>
 <a href="/help_support/">Help and Support</a><br />
 </div>
-</body>
-</html>
+{% endblock %}
