@@ -1,12 +1,15 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-<<<<<<< HEAD
 from LibroLink.models import Book
 from LibroLink.models import Category
+from LibroLink.forms import UserForm,UserProfileForm
+from django.contrib.auth import authenticate, login
+from django.urls import reverse
+from django.shortcuts import redirect
 
+# Create your views here.
 def index(request):
     return render(request, 'LibroLink/index.html')
-
 
 def profile(request):
     
@@ -18,15 +21,6 @@ def profile(request):
     context_dict['book'] = book_list
 
     return render(request, 'LibroLink/profile.html', context=context_dict)
-=======
-from LibroLink.forms import UserForm,UserProfileForm
-from django.contrib.auth import authenticate, login
-from django.urls import reverse
-from django.shortcuts import redirect
-
-# Create your views here.
-def index(request):
-    return render(request, 'LibroLink/index.html')
 
 def register(request):
     registered = False
@@ -80,4 +74,3 @@ def user_login(request):
             return HttpResponse("Invalid login details supplied.")
     else:
         return render(request, 'LibroLink/login.html')
->>>>>>> 0a2d65fe434e9a0d169862521441acbddc075658
