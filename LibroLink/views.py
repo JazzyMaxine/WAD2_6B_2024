@@ -1,10 +1,10 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from rango.models import Book
-from rango.models import Category
+from LibroLink.models import Book
+from LibroLink.models import Category
 
 def index(request):
-    return render(request, 'rango/index.html')
+    return render(request, 'LibroLink/index.html')
 
 
 def profile(request):
@@ -16,4 +16,4 @@ def profile(request):
     context_dict['categories'] = category_list
     context_dict['book'] = book_list
 
-    return render(request, 'rango/profile.html', context=context_dict)
+    return render(request, 'LibroLink/profile.html', context=context_dict)
