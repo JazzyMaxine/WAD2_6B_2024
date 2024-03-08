@@ -1,4 +1,4 @@
-{% extends 'rango/base.html' %} 
+{% extends 'LibroLink/base.html' %} 
 {% load staticfiles %} 
 
 {% block title_block %} 
@@ -7,7 +7,7 @@
 
 {% block body_block %} 
 <h1>Login to BookFinder</h1> 
-<form id="login_form" method="post" action="{% url 'rango:login' %}"> 
+<form id="login_form" method="post" action="{% url 'LibroLink:login' %}"> 
     {%csrf_token%} 
     Username: <input type="text" name="username" value="" size="50" /> 
     <br /> 
