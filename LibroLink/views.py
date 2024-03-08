@@ -1,13 +1,26 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from rango.forms import UserForm,UserProfileForm
+from LibroLink.models import Book
+from LibroLink.models import Category
+from LibroLink.forms import UserForm,UserProfileForm
 from django.contrib.auth import authenticate, login
 from django.urls import reverse
 from django.shortcuts import redirect
 
 # Create your views here.
 def index(request):
-    return render(request, 'rango/index.html')
+    return render(request, 'LibroLink/index.html')
+
+def profile(request):
+    
+    category_list = Category.objects.order_by('-activity')[:5]
+    book_list = Book.objects.order_by('-readingOrder')[:5]
+
+    context_dict = {}
+    context_dict['categories'] = category_list
+    context_dict['book'] = book_list
+
+    return render(request, 'LibroLink/profile.html', context=context_dict)
 
 def register(request):
     registered = False
@@ -38,7 +51,7 @@ def register(request):
         profile_form = UserProfileForm()
 
     return render(request, 
-                  'rango/register.html', 
+                  'LibroLink/register.html', 
                   context = {'user_form':user_form, 
                              'profile_form':profile_form, 
                              'registered':registered})
@@ -53,15 +66,11 @@ def user_login(request):
         if user:
             if user.is_active:
                 login(request, user)
-                return redirect(reverse('rango:index'))
+                return redirect(reverse('LibroLink:index'))
             else:
                 return HttpResponse("Your book finder account is disabled.")
         else:
             print(f"Invalid login details: {username}, {password}")
             return HttpResponse("Invalid login details supplied.")
     else:
-        return render(request, 'rango/login.html')
-
-
-def featured(request):
-    return render(request, 'rango/featured.html')
+        return render(request, 'LibroLink/login.html')

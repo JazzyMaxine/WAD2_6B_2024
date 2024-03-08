@@ -1,12 +1,12 @@
-{% extends 'rango/base.html' %}
+{% extends 'LibroLink/base.html' %}
 {% load staticfiles %}
 
 {% block title_block %}
-    Register
+    Index
 {% endblock %}
 
 {% block body_block %}
-<h1>Welcome to Rango Reading Platform</h1>
+<h1>Welcome to LibroLink Reading Platform</h1>
 <p>Please start reading and share with your friends!</p>
 
 <nav>
@@ -14,7 +14,7 @@
         <li><a href="/">Home</a></li>
         <li><a href="/books/">Books</a></li>
         <li><a href="/user/">User Center</a></li>
-        <li><a href="{% url 'rango:register' %}">SignUp</a></li>
+        <li><a href="{% url 'LibroLink:register' %}">SignUp</a></li>
     </ul>
 </nav>
 

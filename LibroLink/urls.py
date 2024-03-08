@@ -1,11 +1,11 @@
 from django.urls import path
-from rango import views
+from LibroLink import views
 
-app_name = 'rango'
+app_name = 'LibroLink'
 
 urlpatterns = [
     path('', views.index, name='index'),
     path('register/', views.register, name='register'),
     path('login/', views.user_login, name='login'),
-    path('featured/', views.featured, name='featured'),
+    path('profile/', views.profile, name='profile'),
 ]
