@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{% extends 'rango/base.html' %}
 
     <html>
 
@@ -22,7 +23,20 @@
 
             <div>
                 <h2>Categories</h2>
-            </div>
+                {% if categories %}
+                <ul>
+                {% for category in categories %}
+                    <li>
+                        <a href="{% url 'LibroLink:show_category' category.slug $}">
+                        {{ category.name }}
+                    </li>
+                {% endfor %}
+                </ul>
+            {% else %}
+                <strong>You are not currently subscribed to any categories.</strong>
+            {% endif %}
+
+        </div>
 
         </body>
 

@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from LibroLink.models import Book
-from LibroLink.models import Category
+# from LibroLink.models import Book
+# from LibroLink.models import Category
 from LibroLink.forms import UserForm,UserProfileForm
 from django.contrib.auth import authenticate, login
 from django.urls import reverse
@@ -74,3 +74,23 @@ def user_login(request):
             return HttpResponse("Invalid login details supplied.")
     else:
         return render(request, 'LibroLink/login.html')
+
+
+def show_category(request, category_name_slug):
+    
+    context_dict = {}
+
+    try:
+
+        category = Category.objects.get(slug=category_name_slug)
+        books = Book.objects.filter(category=category)
+        context_dict['books'] = books
+        context_dict['category'] = category
+    
+    except Category.DoesNotExist:
+
+        context_dict['category'] = None
+        context_dict['books'] = None
+
+    
+    return render(request, 'LibroLink/category.html', context=context_dict)
