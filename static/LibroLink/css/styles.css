@@ -1,3 +1,19 @@
+div.content_box {
+    border-radius: 15px;
+    background-color: #CCD5FF;
+    padding: 20px;
+    width: fit-content;
+    height: fit-content;
+}
+
+div.book_preview {
+    border-radius: 10px;
+    background-color: #838E83;
+    padding: 10px;
+    width: fit-content;
+    height: fit-content;
+}
+
 body, html {
     background-color: #f5f5dc; 
     color: #333; 
