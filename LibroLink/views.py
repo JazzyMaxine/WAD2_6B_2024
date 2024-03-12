@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from LibroLink.models import Book
-##from LibroLink.models import Category
+from LibroLink.models import Category
 from LibroLink.forms import UserForm,UserProfileForm
 from django.contrib.auth import authenticate, login
 from django.urls import reverse
