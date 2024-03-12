@@ -12,4 +12,76 @@ div.book_preview {
     padding: 10px;
     width: fit-content;
     height: fit-content;
+
+}
+
+body, html {
+    background-color: #f5f5dc; 
+    color: #333; 
+    font-family: Arial, sans-serif; 
+}
+
+.container-fluid {
+    padding: 20px;
+}
+
+.search-bar {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.search-bar input[type="text"] {
+    width: 60%;
+    padding: 8px;
+}
+
+.search-bar button {
+    padding: 8px 16px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.search-bar button:hover {
+    background-color: #0056b3;
+}
+
+figure img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    max-width: 400px;
+    height: auto; 
+}
+
+figcaption {
+    text-align: center; 
+}
+
+footer {
+    display: flex;
+    justify-content: start; 
+    padding: 20px 0; 
+}
+
+footer div {
+    margin-right: 40px; 
+}
+
+footer ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0; 
+}
+
+footer li {
+    text-align: left; 
+    margin-bottom: 10px; 
+}
+=======
 }

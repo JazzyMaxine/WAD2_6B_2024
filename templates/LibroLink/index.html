@@ -6,28 +6,32 @@
 {% endblock %}
 
 {% block body_block %}
-<h1>Welcome to LibroLink Reading Platform</h1>
-<p>Please start reading and share with your friends!</p>
-
-<nav>
+<nav class="container-fluid" style="background-color: #f5f5dc;">
+    <ul>
+        <li><strong>LibroLink Reading Platform</strong></li>
+    </ul>    
     <ul>
         <li><a href="/">Home</a></li>
         <li><a href="/books/">Books</a></li>
-        <li><a href="/user/">User Center</a></li>
-        <li><a href="{% url 'LibroLink:register' %}">SignUp</a></li>
+        <li><a href="/user/" role="button">User Center</a></li>
+        <li><a href="{% url 'LibroLink:register' %}" role="button">SignUp</a></li>
     </ul>
 </nav>
 
-<h1>Discover More</h1>
-<strong>{{ boldmessage }}</strong><br />
-<div>
-    <li><a href="/books/best/">Best Books!</a></li>
-    <img src="{% static 'images/books.jpg' %}"
-         alt="Picture of Books"/>
-<br />
-</div>
-
-<div>
-<a href="/help_support/">Help and Support</a><br />
-</div>
+<main class="container" style="background-color: #f5f5dc;">
+    <div class="grid">
+        <section>
+            <h1>Welcome to LibroLink Reading Platform</h1>
+            <p>Please start reading and share with your friends!</p>
+            <form action="{% url 'LibroLink:book_search' %}" method="get" class="search-bar">
+                <input type="text" id="searchQuery" name="searchQuery" placeholder="Search for books..." aria-label="Search books" required>
+                <button type="submit">Search</button>
+            </form>
+            <figure>
+                <img src="{% static 'images/books.jpg' %}" alt="Picture of Books" style="width: 100%; max-width: 400px; height: auto;">
+                <figcaption><a href="/books/best/" target="_blank">Discover the Best Books!</a></figcaption>
+            </figure>
+        </section>
+    </div>
+</main>
 {% endblock %}
