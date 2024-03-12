@@ -1,0 +1,18 @@
+{% extends 'LibroLink/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+    Featured
+{% endblock %}
+
+<!-- featured pages, which have their own featured books -->
+{% block body_block %}
+    {% for page in featured_pages %}
+        <div class="content_box">
+            <h1>{{ page. }}</h1>
+            <div class="book_preview">
+                <img src="{% static 'images/books.jpg' %}" alt="Picture of Books" height="100px"/>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}

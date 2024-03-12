@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+
+<html>
+    <head>
+        <title>
+            Books - 
+            {% block title_block %}
+                Here is your basic book page
+            {% endblock %}
+        </title>
+        <link rel="stylesheet", href="{% static 'LibroLink/css/styles.css' %}">
+    </head>
+    <body>
+        <div>
+            {% block body_block %}
+            {% endblock %}
+        </div>
+        <hr />
+        <div>
+            <!-- fill this in later -->
+            Register below:
+            <li><a href="{% url 'LibroLink:register' %}">SignUp</a></li>
+            Or:
+            <li><a href="{% url 'LibroLink:login' %}">Login</a></li>
+        </div>
+    </body>
+</html>
