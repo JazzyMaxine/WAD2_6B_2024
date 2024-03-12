@@ -94,3 +94,4 @@ def show_category(request, category_name_slug):
 
     
     return render(request, 'LibroLink/category.html', context=context_dict)
+

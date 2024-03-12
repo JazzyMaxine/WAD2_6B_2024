@@ -9,16 +9,51 @@
 
         <body>
             <div>    
-                <img src="{{ MEDIA_URL }}placeholderUserIcon.jpg" alt="User Profile Picture Placeholder"/>
+                {% if user.profile.profile_picture %}
+
+                    <img src="{{ MEDIA_URL }}{{ request.user.profile.profile_picture }}" alt="Profile Picture" class="userProfilePicture" />
+
+                {% else %}
+
+                    <img src="{% static 'placeHolderUserIcon.jpg' %}" class="defaultProfilePicture" />
+
+                {% endif %}
+
                 <p>Change Profile Picture</p>
             </div>
-
+            <div>
+                <h2>Current Book</h2>
+                <img src="{{ MEDIA_URL }}{{ book.image.url }}" alt="Currently Read Book Picture" />
+            </div>
             <div>
                 <h2>My Books</h2>
+                {% if books %}
+                <ul>
+                {% for book in books %}
+                    <li>
+                        <a href="{% url 'LibroLink:show_book' book.slug %}">
+                        {{ book.name }}
+                    </li>
+                {% endfor %}
+                </ul>
+            {% else %}
+                <strong>You do not currently have any books.</strong>
+            {% endif %}
             </div>
 
             <div>
                 <h2>Friends</h2>
+                {% if friends %}
+                <ul>
+                {% for friend in friends %}
+                    <li>
+                        {{ friend.name }}
+                    </li>
+                {% endfor %}
+                </ul>
+            {% else %}
+                <strong>You do not currently have any friends.</strong>
+            {% endif %}
             </div>
 
             <div>
@@ -27,7 +62,7 @@
                 <ul>
                 {% for category in categories %}
                     <li>
-                        <a href="{% url 'LibroLink:show_category' category.slug $}">
+                        <a href="{% url 'LibroLink:show_category' category.slug %}">
                         {{ category.name }}
                     </li>
                 {% endfor %}
