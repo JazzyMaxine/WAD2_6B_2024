@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from LibroLink.models import Book
-from LibroLink.models import Category
+##from LibroLink.models import Category
 from LibroLink.forms import UserForm,UserProfileForm
 from django.contrib.auth import authenticate, login
 from django.urls import reverse
@@ -74,3 +74,11 @@ def user_login(request):
             return HttpResponse("Invalid login details supplied.")
     else:
         return render(request, 'LibroLink/login.html')
+
+def book_search(request):
+    query = request.GET.get('searchQuery') 
+    if query:
+        books = Book.objects.filter(title__icontains=query)
+    else:
+        books = None 
+    return render(request, 'LibroLink/search_results.html', {'books': books})
