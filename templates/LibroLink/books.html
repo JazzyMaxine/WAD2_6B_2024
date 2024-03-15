@@ -1,0 +1,16 @@
+{% extends 'LibroLink/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+    Books
+{% endblock %}
+
+{% block body_block %}
+<main class="container">
+    <h1>Click on the book you want to read, or find books by category!</h1>
+    <div class="book">
+        <img src="{% static 'images/books.jpg' %}" alt="Picture of Books" style="width:200px;height:auto;">
+        <h2><a href="/books/book-detail/">Book name</a></h2>
+    </div>
+</main>
+{% endblock %}
