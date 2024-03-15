@@ -39,4 +39,5 @@ class Book(models.Model):
     summary = models.TextField(blank=True)
 
     def __str__(self):
-        return self.title    
+       return self.title    
+    

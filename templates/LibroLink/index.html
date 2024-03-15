@@ -12,8 +12,8 @@
     </ul>    
     <ul>
         <li><a href="/">Home</a></li>
-        <li><a href="/books/">Books</a></li>
-        <li><a href="/user/" role="button">User Center</a></li>
+        <li><a href="{% url 'LibroLink:books' %}">Books</a></li>
+        <li><a href="{% url 'LibroLink:profile' %}" role="button">User Center</a></li>
         <li><a href="{% url 'LibroLink:register' %}" role="button">SignUp</a></li>
     </ul>
 </nav>
@@ -29,7 +29,7 @@
             </form>
             <figure>
                 <img src="{% static 'images/books.jpg' %}" alt="Picture of Books" style="width: 100%; max-width: 400px; height: auto;">
-                <figcaption><a href="/books/best/" target="_blank">Discover the Best Books!</a></figcaption>
+                <figcaption><a href="/book/best/" target="_blank">Discover the Best Books!</a></figcaption>
             </figure>
         </section>
     </div>
