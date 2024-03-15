@@ -30,14 +30,14 @@ def populate():
     users = [
         {
             'username':'LR-II',
-            'password':'unsafePassword123',
+            #'password':'unsafePassword123',
             'email':'lucaskennington@gmail.com',
             'first_name':'Lucas',
             'last_name':'Kennington'
         },
         {
             'username':'rCalifornia12',
-            'password':'lizardKing76',
+            #'password':'lizardKing76',
             'email':'robertcalifornia@dundermifflin.org',
             'first_name':'Bob',
             'last_name':'Kamazakis'
