@@ -1,29 +1,25 @@
-<!DOCTYPE html>
+{% extends 'LibroLink/base.html' %}
+{% load staticfiles %}
 
-    <html>
+{% block title_block %}
+    Profile
+{% endblock %}
 
-        <head>
-            <title>Profile</title>
-        </head>
+{% block body_block %}
+<div>    
+    <img src="{{ MEDIA_URL }}placeholderUserIcon.jpg" alt="User Profile Picture Placeholder"/>
+    <p>Change Profile Picture</p>
+</div>
 
-        <body>
-            <div>    
-                <img src="{{ MEDIA_URL }}placeholderUserIcon.jpg" alt="User Profile Picture Placeholder"/>
-                <p>Change Profile Picture</p>
-            </div>
+<div>
+    <h2>My Books</h2>
+</div>
 
-            <div>
-                <h2>My Books</h2>
-            </div>
+<div>
+    <h2>Friends</h2>
+</div>
 
-            <div>
-                <h2>Friends</h2>
-            </div>
-
-            <div>
-                <h2>Categories</h2>
-            </div>
-
-        </body>
-
-    </html>
+<div>
+    <h2>Categories</h2>
+</div>
+{% endblock %}

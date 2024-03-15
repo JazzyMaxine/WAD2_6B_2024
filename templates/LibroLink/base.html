@@ -17,12 +17,22 @@
             {% endblock %}
         </div>
         <hr />
-        <div>
-            <!-- fill this in later -->
-            Register below:
-            <li><a href="{% url 'LibroLink:register' %}">SignUp</a></li>
-            Or:
-            <li><a href="{% url 'LibroLink:login' %}">Login</a></li>
-        </div>
+
+        <footer>
+            <div style="display: flex; justify-content: space-between;">
+                <div>
+                    <ul style="list-style-type: none; padding: 0;">
+                        <li><a href="{% url 'LibroLink:help_support' %}">Help & Support</a></li>
+                        <li><a href="{% url 'LibroLink:privacy' %}">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <ul style="list-style-type: none; padding: 0;">
+                        <li><a href="{% url 'LibroLink:register' %}">SignUp</a></li>
+                        <li><a href="{% url 'LibroLink:login' %}">Login</a></li>
+                    </ul>
+                </div>
+            </div>
+        </footer>
     </body>
 </html>
