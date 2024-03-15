@@ -12,6 +12,7 @@ div.book_preview {
     padding: 10px;
     width: fit-content;
     height: fit-content;
+
 }
 
 body, html {
@@ -81,4 +82,6 @@ footer ul {
 footer li {
     text-align: left; 
     margin-bottom: 10px; 
+}
+=======
 }
