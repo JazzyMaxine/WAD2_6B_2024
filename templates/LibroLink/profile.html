@@ -1,0 +1,25 @@
+{% extends 'LibroLink/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+    Profile
+{% endblock %}
+
+{% block body_block %}
+<div>    
+    <img src="{{ MEDIA_URL }}placeholderUserIcon.jpg" alt="User Profile Picture Placeholder"/>
+    <p>Change Profile Picture</p>
+</div>
+
+<div>
+    <h2>My Books</h2>
+</div>
+
+<div>
+    <h2>Friends</h2>
+</div>
+
+<div>
+    <h2>Categories</h2>
+</div>
+{% endblock %}
