@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-{% load staticfiles %}
+{% load static %}
 
 <html>
+<<<<<<< Updated upstream
     <head>
         <title>
             Books - 
@@ -19,9 +20,33 @@
         <div>
             <!-- fill this in later -->
             Register below:
+=======
+<head>
+    <title>
+        Books - 
+        {% block title_block %}
+            Here is your basic book page
+        {% endblock %}
+    </title>
+    <link rel="stylesheet" href="{% static 'rango/css/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'LibroLink/css/styles.css' %}"> 
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <div id="navbar">
+        <ul>
+            <li><a href="{% url 'LibroLink:index' %}">Home</a></li>
+            <li><a href="{% url 'LibroLink:review-list' %}">Reviews</a></li>
+>>>>>>> Stashed changes
             <li><a href="{% url 'LibroLink:register' %}">SignUp</a></li>
-            Or:
             <li><a href="{% url 'LibroLink:login' %}">Login</a></li>
-        </div>
-    </body>
+        </ul>
+    </div>
+    <hr />
+
+    <div>
+        {% block content %}
+        {% endblock %}
+    </div>
+</body>
 </html>
