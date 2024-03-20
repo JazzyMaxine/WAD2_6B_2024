@@ -56,7 +56,11 @@ class Followers(models.Model):
 class Friends(models.Model):
     userA = models.ForeignKey(User, on_delete=models.CASCADE, related_name="friend_user_a")
     userB = models.ForeignKey(User, on_delete=models.CASCADE, related_name="friend_user_b")
+    date_established = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        unique_together = ('userA', 'userB')
+        
     def __str__(self):
         return self.userA.username + ", " + self.userB.username
     

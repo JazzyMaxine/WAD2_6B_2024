@@ -1,25 +1,78 @@
-{% extends 'LibroLink/base.html' %}
-{% load staticfiles %}
+<!DOCTYPE html>
+    {% extends 'LibroLink/base.html' %}
+    {% load staticfiles %}
+    <html>
+ 
+            {% block title_block %}
+            <title>Profile</title>>
+            {% endblock %}
+            
+        <body>
+            {% block body_block %}
+            <div>    
+                {% if user.profile.profile_picture %}
 
-{% block title_block %}
-    Profile
-{% endblock %}
+                    <img src="{{ MEDIA_URL }}{{ request.user.profile.profile_picture }}" alt="Profile Picture" class="userProfilePicture" />
 
-{% block body_block %}
-<div>    
-    <img src="{{ MEDIA_URL }}placeholderUserIcon.jpg" alt="User Profile Picture Placeholder"/>
-    <p>Change Profile Picture</p>
-</div>
+                {% else %}
 
-<div>
-    <h2>My Books</h2>
-</div>
+                    <img src="{% static 'placeHolderUserIcon.jpg' %}" class="defaultProfilePicture" />
 
-<div>
-    <h2>Friends</h2>
-</div>
+                {% endif %}
 
-<div>
-    <h2>Categories</h2>
-</div>
-{% endblock %}
+                <p>Change Profile Picture</p>
+            </div>
+            <div>
+                <h2>Current Book</h2>
+                <img src="{{ MEDIA_URL }}{{ book.image.url }}" alt="Currently Read Book Picture" />
+            </div>
+            <div>
+                <h2>My Books</h2>
+                {% if books %}
+                <ul>
+                {% for book in books %}
+                    <li>
+                        <a href="{% url 'LibroLink:show_book' book.slug %}">
+                        {{ book.name }}
+                    </li>
+                {% endfor %}
+                </ul>
+            {% else %}
+                <strong>You do not currently have any books.</strong>
+            {% endif %}
+            </div>
+
+            <div>
+                <h2>Friends</h2>
+                <ul>
+                {% for friendship in friendship %}
+                    <li>
+                        {{ friendship.user1.username }} and {{ friendship.user2.username }}
+                    </li>
+                {% endfor %}
+                </ul>
+            {% else %}
+                <strong>You do not currently have any friends.</strong>
+            {% endif %}
+            </div>
+
+            <div>
+                <h2>Categories</h2>
+                {% if categories %}
+                <ul>
+                {% for category in categories %}
+                    <li>
+                        <a href="{% url 'LibroLink:show_category' category.slug %}">
+                        {{ category.name }}
+                    </li>
+                {% endfor %}
+                </ul>
+            {% else %}
+                <strong>You are not currently subscribed to any categories.</strong>
+            {% endif %}
+
+        </div>
+        {% endblock %} 
+        </body>
+
+    </html>
