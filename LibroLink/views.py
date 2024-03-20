@@ -1,10 +1,6 @@
 from django.shortcuts import render,get_object_or_404
 from django.http import HttpResponse
-<<<<<<< HEAD
 from LibroLink.models import Book,BookCategory
-=======
-from LibroLink.models import Book
->>>>>>> main
 from LibroLink.models import Category
 from LibroLink.forms import UserForm,UserProfileForm
 from django.contrib.auth import authenticate, login
@@ -120,10 +116,6 @@ def books(request):
     categories = BookCategory.objects.all()
     return render(request, 'LibroLink/books.html', {'categories': categories})
 
-<<<<<<< HEAD
 def book_detail(request, book_id):
     book = get_object_or_404(Book, id=book_id)
     return render(request, 'LibroLink/book_detail.html', {'book': book})
-=======
-
->>>>>>> main
