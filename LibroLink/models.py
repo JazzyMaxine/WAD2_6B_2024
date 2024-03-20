@@ -93,6 +93,7 @@ class Book(models.Model):
     isbn = models.CharField(max_length = 13, unique = True)
     title = models.CharField(max_length = 200)
     author = models.CharField(max_length = 200)
+    publisher = models.CharField(max_length = 200)
     category = models.ForeignKey(BookCategory, related_name='books', on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):

@@ -1,7 +1,7 @@
 from django.shortcuts import render,get_object_or_404
 from django.http import HttpResponse
 from LibroLink.models import Book,BookCategory
-##from LibroLink.models import Category
+from LibroLink.models import Category
 from LibroLink.forms import UserForm,UserProfileForm
 from django.contrib.auth import authenticate, login
 from django.urls import reverse
