@@ -62,7 +62,7 @@ class Friends(models.Model):
         unique_together = ('userA', 'userB')
         
     def __str__(self):
-        return self.userA.username + ", " + self.userB.username
+        return self.userA.username #+ ", " + self.userB.username
     
 class Message(models.Model):
     sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name="message_sender")

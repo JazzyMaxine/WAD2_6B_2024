@@ -14,6 +14,6 @@ urlpatterns = [
     path('books/', views.books, name='books'),
     # path('bookshelf/', views.bookshelf, name='bookshelf'),
     # path('settings/', views.accountSettings, name='settings'),
-    path('friends/', views.friends, name='friends'),
+    # path('friends/', views.friends, name='friends'),
     # path('category/<slug:category_name_slug>/', views.show_category, name='show_category'),
 ]
