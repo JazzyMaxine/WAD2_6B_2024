@@ -54,15 +54,15 @@ class Followers(models.Model):
         return self.user.username
     
 class Friends(models.Model):
-    userA = models.ForeignKey(User, related_name = 'userA', on_delete=models.CASCADE)
-    userB = models.ForeignKey(User, related_name = 'userB', on_delete=models.CASCADE)
+    userA = models.ForeignKey(User, on_delete=models.CASCADE, related_name="friend_user_a")
+    userB = models.ForeignKey(User, on_delete=models.CASCADE, related_name="friend_user_b")
 
     def __str__(self):
         return self.userA.username + ", " + self.userB.username
     
 class Message(models.Model):
-    sender = models.ForeignKey(User, related_name = 'userC', on_delete=models.CASCADE)
-    receiver = models.ForeignKey(User, related_name = 'userD', on_delete=models.CASCADE)
+    sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name="message_sender")
+    receiver = models.ForeignKey(User, on_delete=models.CASCADE, related_name="message_receiver")
     timeSent = models.DateTimeField()
     content = models.CharField(max_length = 2000)
 
