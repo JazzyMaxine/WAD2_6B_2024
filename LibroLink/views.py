@@ -1,6 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render,get_object_or_404
 from django.http import HttpResponse
-from LibroLink.models import Book
+from LibroLink.models import Book,BookCategory
 ##from LibroLink.models import Category
 from LibroLink.forms import UserForm,UserProfileForm
 from django.contrib.auth import authenticate, login
@@ -90,8 +90,10 @@ def help_support(request):
 def privacy(request):
     return render(request, 'LibroLink/privacy.html')
 
-
 def books(request):
-    books = Book.objects.all().order_by('title')  
-    return render(request, 'LibroLink/books.html',{'books': books})
+    categories = BookCategory.objects.all()
+    return render(request, 'LibroLink/books.html', {'categories': categories})
 
+def book_detail(request, book_id):
+    book = get_object_or_404(Book, id=book_id)
+    return render(request, 'LibroLink/book_detail.html', {'book': book})
