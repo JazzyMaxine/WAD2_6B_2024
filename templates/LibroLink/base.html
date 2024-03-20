@@ -13,6 +13,16 @@
     </head>
     <body>
         <div>
+            {% block nav_bar %}
+            <nav>
+                <h2>LibroLink</h2>
+                <h2>{{ page.name }}</h2>
+                <img src="{{ MEDIA_URL }}placeholderUserIcon.jpg" alt="User Profile Picture Placeholder"/>
+                <img src="{% static 'images/hamburgerButton' %}" alt="Dropdown Menu" />
+            </nav>
+            {% endblock %}
+        </div>
+        <div>
             {% block body_block %}
             {% endblock %}
         </div>

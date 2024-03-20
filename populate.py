@@ -3,7 +3,7 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'WAD2_6B_2024.settings')
 
 import django
 django.setup()
-from WAD2_6B_2024.models import *
+from LibroLink.models import *
 
 def populate():
     books = [

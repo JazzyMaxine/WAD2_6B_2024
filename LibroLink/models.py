@@ -54,15 +54,29 @@ class Followers(models.Model):
         return self.user.username
     
 class Friends(models.Model):
+<<<<<<< HEAD
     userA = models.ForeignKey(User, related_name = 'userA', on_delete=models.CASCADE)
     userB = models.ForeignKey(User, related_name = 'userB', on_delete=models.CASCADE)
+=======
+    userA = models.ForeignKey(User, on_delete=models.CASCADE, related_name="friend_user_a")
+    userB = models.ForeignKey(User, on_delete=models.CASCADE, related_name="friend_user_b")
+    date_established = models.DateTimeField(auto_now_add=True)
+>>>>>>> main
 
+    class Meta:
+        unique_together = ('userA', 'userB')
+        
     def __str__(self):
         return self.userA.username + ", " + self.userB.username
     
 class Message(models.Model):
+<<<<<<< HEAD
     sender = models.ForeignKey(User, related_name = 'userC', on_delete=models.CASCADE)
     receiver = models.ForeignKey(User, related_name = 'userD', on_delete=models.CASCADE)
+=======
+    sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name="message_sender")
+    receiver = models.ForeignKey(User, on_delete=models.CASCADE, related_name="message_receiver")
+>>>>>>> main
     timeSent = models.DateTimeField()
     content = models.CharField(max_length = 2000)
 

@@ -1,0 +1,25 @@
+{% extends 'LibroLink/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+    {% if category %}
+        {{ category.name }}
+    {% else %}
+        Unknown Category
+    {% endif %}
+{% endblock %}
+
+{% block body_block %}
+    {% if category %}
+    <h1>{{ category.name }}</h1>
+    {% if books %}
+    <ul>
+        {% for book in books %}
+        <li><a href="{{ book.url }}">{{ book.title }}</a></li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <strong>No books currently in category.</strong>
+    {% endif %}
+
+{% endblock %}
