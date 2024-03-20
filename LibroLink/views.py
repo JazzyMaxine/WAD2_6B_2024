@@ -1,11 +1,12 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from LibroLink.models import Book
-##from LibroLink.models import Category
+from LibroLink.models import Category
 from LibroLink.forms import UserForm,UserProfileForm
 from django.contrib.auth import authenticate, login
 from django.urls import reverse
 from django.shortcuts import redirect
+from LibroLink.models import Friends
 
 # Create your views here.
 def index(request):
@@ -13,8 +14,8 @@ def index(request):
 
 def profile(request):
     
-    category_list = Category.objects.order_by('-activity')[:5]
-    book_list = Book.objects.order_by('-readingOrder')[:5]
+    category_list = Category.objects.order_by('-likes')[:5]
+    book_list = Book.objects.order_by('-title')[:5]
 
     context_dict = {}
     context_dict['categories'] = category_list
@@ -115,4 +116,5 @@ def privacy(request):
 def books(request):
     books = Book.objects.all().order_by('title')  
     return render(request, 'LibroLink/books.html',{'books': books})
+
 
