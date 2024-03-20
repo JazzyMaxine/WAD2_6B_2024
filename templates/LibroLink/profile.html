@@ -1,78 +1,34 @@
 <!DOCTYPE html>
-    {% extends 'LibroLink/base.html' %}
-    {% load staticfiles %}
-    <html>
- 
-            {% block title_block %}
-            <title>Profile</title>>
-            {% endblock %}
-            
-        <body>
-            {% block body_block %}
-            <div>    
-                {% if user.profile.profile_picture %}
+{% load staticfiles %}
+<html lang="en">
+<head>
+    <link rel="stylesheet" type = "text/css" href="{% static 'LibroLink/css/profilePageStyles.css' %}">
+    <title>Profile</title>
+</head>
+<body>
+    
+    <div id="topLogoDiv">
+        {% if user_profile.picture %}
+            <img src="{{ user_profile.picture.url }}" alt="Profile Picture" id="mainImage">
+        {% else %}
+            <img src="{% static '\images\placeholderUserIcon.jpg' %}" alt="Default Profile Picture" class="mainProfileImage" id="mainImage">
+        {% endif %}
 
-                    <img src="{{ MEDIA_URL }}{{ request.user.profile.profile_picture }}" alt="Profile Picture" class="userProfilePicture" />
+        <h1 id="mainUsername">{{ user_profile.user.username }}</h1>
+    </div>
 
-                {% else %}
+    <div id="mainContentDiv">
 
-                    <img src="{% static 'placeHolderUserIcon.jpg' %}" class="defaultProfilePicture" />
-
-                {% endif %}
-
-                <p>Change Profile Picture</p>
-            </div>
-            <div>
-                <h2>Current Book</h2>
-                <img src="{{ MEDIA_URL }}{{ book.image.url }}" alt="Currently Read Book Picture" />
-            </div>
-            <div>
-                <h2>My Books</h2>
-                {% if books %}
-                <ul>
-                {% for book in books %}
-                    <li>
-                        <a href="{% url 'LibroLink:show_book' book.slug %}">
-                        {{ book.name }}
-                    </li>
-                {% endfor %}
-                </ul>
-            {% else %}
-                <strong>You do not currently have any books.</strong>
-            {% endif %}
-            </div>
-
-            <div>
-                <h2>Friends</h2>
-                <ul>
-                {% for friendship in friendship %}
-                    <li>
-                        {{ friendship.user1.username }} and {{ friendship.user2.username }}
-                    </li>
-                {% endfor %}
-                </ul>
-            {% else %}
-                <strong>You do not currently have any friends.</strong>
-            {% endif %}
-            </div>
-
-            <div>
-                <h2>Categories</h2>
-                {% if categories %}
-                <ul>
-                {% for category in categories %}
-                    <li>
-                        <a href="{% url 'LibroLink:show_category' category.slug %}">
-                        {{ category.name }}
-                    </li>
-                {% endfor %}
-                </ul>
-            {% else %}
-                <strong>You are not currently subscribed to any categories.</strong>
-            {% endif %}
-
-        </div>
-        {% endblock %} 
-        </body>
-
-    </html>
+    <h2 class ="profileTitles">Username: </h2> 
+    <h2 class ="profileValues">{{ user_profile.user.username }}</h2>
+    
+    <h2 class ="profileTitles">Email: </h2> 
+    <h2 class ="profileValues">{{ user_profile.user.email }}</h2>
+    
+    <h2 class ="profileTitles">Password: </h2> 
+    <h2 class ="profileValues">***********</h2>
+    
+    </div>
+    
+</body>
+</html>

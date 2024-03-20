@@ -7,21 +7,14 @@ from django.contrib.auth import authenticate, login
 from django.urls import reverse
 from django.shortcuts import redirect
 from LibroLink.models import Friends
+from django.contrib.auth.decorators import login_required
+from LibroLink.models import UserProfile
+
 
 # Create your views here.
 def index(request):
     return render(request, 'LibroLink/index.html')
 
-def profile(request):
-    
-    category_list = Category.objects.order_by('-likes')[:5]
-    book_list = Book.objects.order_by('-title')[:5]
-
-    context_dict = {}
-    context_dict['categories'] = category_list
-    context_dict['book'] = book_list
-
-    return render(request, 'LibroLink/profile.html', context=context_dict)
 
 def register(request):
     registered = False
@@ -41,6 +34,7 @@ def register(request):
 
             if 'picture' in request.FILES:
                 profile.picture = request.FILES['picture']
+
 
             profile.save()
 
@@ -75,7 +69,6 @@ def user_login(request):
             return HttpResponse("Invalid login details supplied.")
     else:
         return render(request, 'LibroLink/login.html')
-
 
 def show_category(request, category_name_slug):
     
@@ -118,3 +111,11 @@ def books(request):
     return render(request, 'LibroLink/books.html',{'books': books})
 
 
+@login_required
+def profile(request):
+    try:
+        user_profile = UserProfile.objects.get(user=request.user)
+    except UserProfile.DoesNotExist:
+        user_profile = None  
+
+    return render(request, 'LibroLink/profile.html', {'user_profile': user_profile})
