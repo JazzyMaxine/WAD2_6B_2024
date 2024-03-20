@@ -54,9 +54,14 @@ class Followers(models.Model):
         return self.user.username
     
 class Friends(models.Model):
+<<<<<<< HEAD
+    userA = models.ForeignKey(User, related_name = 'userA', on_delete=models.CASCADE)
+    userB = models.ForeignKey(User, related_name = 'userB', on_delete=models.CASCADE)
+=======
     userA = models.ForeignKey(User, on_delete=models.CASCADE, related_name="friend_user_a")
     userB = models.ForeignKey(User, on_delete=models.CASCADE, related_name="friend_user_b")
     date_established = models.DateTimeField(auto_now_add=True)
+>>>>>>> main
 
     class Meta:
         unique_together = ('userA', 'userB')
@@ -65,8 +70,13 @@ class Friends(models.Model):
         return self.userA.username + ", " + self.userB.username
     
 class Message(models.Model):
+<<<<<<< HEAD
+    sender = models.ForeignKey(User, related_name = 'userC', on_delete=models.CASCADE)
+    receiver = models.ForeignKey(User, related_name = 'userD', on_delete=models.CASCADE)
+=======
     sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name="message_sender")
     receiver = models.ForeignKey(User, on_delete=models.CASCADE, related_name="message_receiver")
+>>>>>>> main
     timeSent = models.DateTimeField()
     content = models.CharField(max_length = 2000)
 
@@ -82,11 +92,23 @@ class BlogPost(models.Model):
     def __str__(self):
         return self.content
     
+class BookCategory(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+    slug = models.SlugField(unique=True)
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.name)
+        super(BookCategory, self).save(*args, **kwargs)
+
+    def __str__(self):
+        return self.name
+
 class Book(models.Model):
     isbn = models.CharField(max_length = 13, unique = True)
     title = models.CharField(max_length = 200)
     author = models.CharField(max_length = 200)
     publisher = models.CharField(max_length = 200)
+    category = models.ForeignKey(BookCategory, related_name='books', on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
         return self.title

@@ -12,8 +12,12 @@ urlpatterns = [
     path('help_support/', views.help_support, name='help_support'),
     path('privacy/', views.privacy, name='privacy'),
     path('books/', views.books, name='books'),
+<<<<<<< HEAD
+    path('books/<int:book_id>/', views.book_detail, name='book_detail'),
+=======
     # path('bookshelf/', views.bookshelf, name='bookshelf'),
     # path('settings/', views.accountSettings, name='settings'),
     path('friends/', views.friends, name='friends'),
     # path('category/<slug:category_name_slug>/', views.show_category, name='show_category'),
+>>>>>>> main
 ]
