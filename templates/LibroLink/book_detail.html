@@ -1,0 +1,17 @@
+{% extends 'LibroLink/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+    {{ book.title }}
+{% endblock %}
+
+{% block body_block %}
+<main class="container">
+    <div class="book-detail">
+        <h1>{{ book.title }}</h1>
+        <p><strong>ISBN:</strong> {{ book.isbn }}</p>
+        <p><strong>Author:</strong> {{ book.author }}</p>
+        <p><strong>Publisher:</strong> {{ book.publisher }}</p>
+    </div>
+</main>
+{% endblock %}

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-{% load staticfiles %}
+{% load static %}
 
 <html>
     <head>
@@ -10,17 +10,30 @@
             {% endblock %}
         </title>
         <link rel="stylesheet", href="{% static 'LibroLink/css/styles.css' %}">
+        <script src="{% static 'LibroLink/js/script.js' %}"></script>
     </head>
     <body>
-        <div>
-            {% block nav_bar %}
-            <nav>
-                <h2>LibroLink</h2>
-                <h2>{{ page.name }}</h2>
-                <img src="{{ MEDIA_URL }}placeholderUserIcon.jpg" alt="User Profile Picture Placeholder"/>
-                <img src="{% static 'images/hamburgerButton' %}" alt="Dropdown Menu" />
-            </nav>
-            {% endblock %}
+        <div id = "navbar">
+            <ul>
+            <li><a href="{% url 'LibroLink:index' %}"><h2>LibroLink</h2></a></li>
+            <h2>{{ page.name }}</h2>
+            <li><a href="{% url 'LibroLink:profile' %}">
+                <img class="small-img" src="{% static 'images/userProfileIcon.png' %}" alt="User Profile Picture Placeholder"/>
+            </a></li>
+            <li><a href="{% url 'LibroLink:review-list' %}">Reviews</a></li>
+            {% if user.is_authenticated %}
+            <li><a href="{% url 'LibroLink:friends_list' %}">
+            <img class="small-img" src="{% static 'images/hamburgerButton.png' %}" alt="Friends" />
+            </a></li>
+            {% endif %}
+            {% if not user.is_authenticated %}
+                <li><a href="{% url 'LibroLink:register' %}">SignUp</a></li>
+                <li><a href="{% url 'LibroLink:login' %}">Login</a></li>
+            {% else %}
+                <li><a href="{% url 'LibroLink:logout' %}">Logout</a></li>
+                <li><a href="{% url 'LibroLink:restricted' %}">Restricted Content</a></li>
+            {% endif %}
+            </ul>
         </div>
         <div>
             {% block body_block %}

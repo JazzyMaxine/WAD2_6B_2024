@@ -1,11 +1,27 @@
-from django.shortcuts import render
+
+from django.shortcuts import render, redirect, get_object_or_404
+from django.http import HttpResponse, JsonResponse
+from LibroLink.models import Book, BookCategory, Category
+from django.shortcuts import render,get_object_or_404
 from django.http import HttpResponse
-from LibroLink.models import Book
+from LibroLink.models import Book,BookCategory, Page, Featured
 from LibroLink.models import Category
 from LibroLink.forms import UserForm,UserProfileForm, AddFriendForm
 from django.contrib.auth import authenticate, login
 from django.urls import reverse
 from django.shortcuts import redirect
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from .forms import ReviewForm
+from .models import Review
+from django.views.generic.list import ListView
+from django.http import HttpResponseForbidden, HttpResponseRedirect
+from django.shortcuts import get_object_or_404, redirect
+from django.views.generic.edit import UpdateView
+from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin
+from LibroLink.models import Friends, FriendRequest, UserProfile, User
+from django.db.models import Count
 from LibroLink.models import Friends
 from django.contrib.auth.decorators import login_required
 from LibroLink.models import UserProfile
@@ -106,7 +122,6 @@ def help_support(request):
 
 def privacy(request):
     return render(request, 'LibroLink/privacy.html')
-
 
 def books(request):
     books = Book.objects.all().order_by('title')  

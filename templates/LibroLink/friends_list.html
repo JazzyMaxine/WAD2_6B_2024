@@ -1,0 +1,14 @@
+{% extends 'LibroLink/base.html' %}
+
+{% block title_block %}
+    Friends List
+{% endblock %}
+
+{% block body_block %}
+    <h1>Friends List</h1>
+    <ul>
+        {% for friend in friends %}
+            <li>{{ friend.username }}</li>
+        {% endfor %}
+    </ul>
+{% endblock %}
