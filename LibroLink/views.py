@@ -105,9 +105,9 @@ def reviews(request):
 
 class ReviewListView(ListView):
     model = Review
-    template_name = 'LibroLink/reviews_list.html'  # might need to create this template
+    template_name = 'LibroLink/reviews_list.html'  
     context_object_name = 'reviews'
-    paginate_by = 10  # Optional: want to paginate the reviews
+    paginate_by = 10  
 
     def get_queryset(self):
         """Optionally, you can filter the reviews or order them differently."""
@@ -119,9 +119,9 @@ def delete_review(request, review_id):
     review = get_object_or_404(Review, id=review_id)
     if review.user != request.user and not request.user.is_superuser:
         return HttpResponseForbidden("You are not allowed to delete this review.")
-    if request.method == 'POST':  # Ensuring deletion is confirmed via POST request
+    if request.method == 'POST':  
         review.delete()
-        return redirect('LibroLink:review-list')  # Redirecting to the list of reviews after deletion
+        return redirect('LibroLink:review-list')  
     else:
         return render(request, 'LibroLink/confirm_delete.html', {'review': review})
     
