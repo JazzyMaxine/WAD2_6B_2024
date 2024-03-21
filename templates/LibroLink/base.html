@@ -10,6 +10,7 @@
             {% endblock %}
         </title>
         <link rel="stylesheet", href="{% static 'LibroLink/css/styles.css' %}">
+        <script src="{% static 'LibroLink/js/script.js' %}"></script>
     </head>
     <body>
         <div>
@@ -39,10 +40,15 @@
                     </ul>
                 </div>
                 <div>
+                    {% if not user.is_authenticated %}
                     <ul style="list-style-type: none; padding: 0;">
                         <li><a href="{% url 'LibroLink:register' %}">SignUp</a></li>
                         <li><a href="{% url 'LibroLink:login' %}">Login</a></li>
                     </ul>
+                    {% else %}
+                        <li><a href="{% url 'LibroLink:logout' %}">Logout</a></li>
+                        <li><a href="{% url 'LibroLink:restricted' %}">Restricted Content</a></li>
+                    {% endif %}
                 </div>
             </div>
         </footer>

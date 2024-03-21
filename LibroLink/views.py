@@ -3,7 +3,8 @@ from django.http import HttpResponse
 from LibroLink.models import Book,BookCategory
 from LibroLink.models import Category
 from LibroLink.forms import UserForm,UserProfileForm
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from django.shortcuts import redirect
 from LibroLink.models import Friends
@@ -75,7 +76,16 @@ def user_login(request):
             return HttpResponse("Invalid login details supplied.")
     else:
         return render(request, 'LibroLink/login.html')
+    
+@login_required
+def user_logout(request):
+    logout(request)
+    HttpResponse("You have successfully logged out :)")
+    return redirect(reverse('LibroLink:index'))
 
+@login_required
+def restricted(request):
+    return HttpResponse("NOPE!")
 
 def show_category(request, category_name_slug):
     
@@ -119,3 +129,6 @@ def books(request):
 def book_detail(request, book_id):
     book = get_object_or_404(Book, id=book_id)
     return render(request, 'LibroLink/book_detail.html', {'book': book})
+
+def featured(request):
+    return render(request, 'LibroLink/featured.html')
