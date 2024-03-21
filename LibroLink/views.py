@@ -1,10 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-<<<<<<< Updated upstream
-=======
 #from LibroLink.models import Book
 #from LibroLink.models import Category
->>>>>>> Stashed changes
 from LibroLink.forms import UserForm,UserProfileForm
 from django.contrib.auth import authenticate, login
 from django.urls import reverse
@@ -85,31 +82,36 @@ def user_login(request):
 @login_required
 def reviews(request):
     form = ReviewForm()
+    context = {
+        'form': form,
+        'rating_choices': ['5', '4', '3', '2', '1']
+    }
 
     if request.method == 'POST':
+        print(request.POST)
         form = ReviewForm(request.POST, request.FILES)
+
         if form.is_valid():
             review = form.save(commit=False)
-            review.user = request.user  # set the user to the current user
+            review.user = request.user  
             review.save()
-            return redirect(reverse('LibroLink:review-list'))  # redirect after POST
+            return redirect(reverse('LibroLink:review-list'))  
         else:
-            print(form.errors, form.errors)  # This will print form errors to the console
-    else:
-        form = ReviewForm()
+            print(form.errors, form.errors)  
+    
+    return render(request, 'LibroLink/reviews.html', context)
 
-    return render(request, 'LibroLink/reviews.html', {'form': form})
 
 
 class ReviewListView(ListView):
     model = Review
-    template_name = 'LibroLink/reviews_list.html'  # You might need to create this template
+    template_name = 'LibroLink/reviews_list.html'  # might need to create this template
     context_object_name = 'reviews'
-    paginate_by = 10  # Optional: if you want to paginate the reviews
+    paginate_by = 10  # Optional: want to paginate the reviews
 
     def get_queryset(self):
         """Optionally, you can filter the reviews or order them differently."""
-        return Review.objects.order_by('-id')  # Assuming there's a date_created field
+        return Review.objects.order_by('-id')
 
 
 @login_required
@@ -121,7 +123,6 @@ def delete_review(request, review_id):
         review.delete()
         return redirect('LibroLink:review-list')  # Redirecting to the list of reviews after deletion
     else:
-        # Show some confirmation page before deleting or return HTTPForbidden
         return render(request, 'LibroLink/confirm_delete.html', {'review': review})
     
 class ReviewUpdateView(LoginRequiredMixin, UpdateView):
@@ -136,3 +137,13 @@ class ReviewUpdateView(LoginRequiredMixin, UpdateView):
         if not self.request.user.is_superuser:
             queryset = queryset.filter(user=self.request.user)
         return queryset
+    
+
+@login_required
+def profile(request):
+    user_profile = request.user.userprofile
+    context = {
+        'user': request.user,
+        'user_profile': user_profile
+    }
+    return render(request, 'LibroLink/profile.html', context)

@@ -8,9 +8,11 @@
     direction: rtl; 
     font-size: 0;
 }
+
 .star-rating input[type="radio"] {
     display: none; 
 }
+
 .star-rating label {
     font-size: 2em;
     color: #ddd; 
@@ -52,7 +54,7 @@
     display: block;
     margin: 20px 0;
     padding: 10px 20px;
-    background-color: #5cb85c; /* Bootstrap 'success' green */
+    background-color: #5cb85c; 
     color: white;
     text-align: center;
     text-decoration: none;
@@ -61,5 +63,5 @@
 }
 
 .add-review-button:hover {
-    background-color: #4cae4c; /* Darken on hover */
+    background-color: #4cae4c; 
 }

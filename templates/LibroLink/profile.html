@@ -1,21 +1,12 @@
 {% extends 'LibroLink/base.html' %}
-{% load static %}
 
 {% block content %}
-<div>    
-    <img src="{{ MEDIA_URL }}placeholderUserIcon.jpg" alt="User Profile Picture Placeholder"/>
-    <p>Change Profile Picture</p>
-</div>
-
-<div>
-    <h2>My Books</h2>
-</div>
-
-<div>
-    <h2>Friends</h2>
-</div>
-
-<div>
-    <h2>Categories</h2>
-</div>
+  <h1>User Profile</h1>
+  <p>Username: {{ user.username }}</p>
+  <p>Email: {{ user.email }}</p>
+  <!-- If you have additional fields on the UserProfile model, you can display them here -->
+  <p>Website: {{ user_profile.website }}</p>
+  {% if user_profile.picture %}
+    <img src="{{ user_profile.picture.url }}" alt="Profile picture">
+  {% endif %}
 {% endblock %}

@@ -17,11 +17,7 @@ class Review(models.Model):
     book_name = models.CharField(max_length=255)
     book_author = models.CharField(max_length=255)
     review_text = models.TextField()
-    rating = models.DecimalField(
-        max_digits=2, 
-        decimal_places=1, 
-        validators=[MinValueValidator(0), MaxValueValidator(5)]
-    )
+    rating = models.DecimalField(max_digits=2, decimal_places=1, validators=[MinValueValidator(0), MaxValueValidator(5)])
     book_image = models.ImageField(upload_to='book_images', blank=True, null=True)
 
     def __str__(self):
@@ -31,3 +27,4 @@ class Review(models.Model):
         verbose_name = _("Review")
         verbose_name_plural = _("Reviews")
         ordering = ['-rating'] 
+        

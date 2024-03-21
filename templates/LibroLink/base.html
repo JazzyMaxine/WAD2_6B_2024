@@ -2,25 +2,6 @@
 {% load static %}
 
 <html>
-<<<<<<< Updated upstream
-    <head>
-        <title>
-            Books - 
-            {% block title_block %}
-                Here is your basic book page
-            {% endblock %}
-        </title>
-    </head>
-    <body>
-        <div>
-            {% block body_block %}
-            {% endblock %}
-        </div>
-        <hr />
-        <div>
-            <!-- fill this in later -->
-            Register below:
-=======
 <head>
     <title>
         Books - 
@@ -37,7 +18,6 @@
         <ul>
             <li><a href="{% url 'LibroLink:index' %}">Home</a></li>
             <li><a href="{% url 'LibroLink:review-list' %}">Reviews</a></li>
->>>>>>> Stashed changes
             <li><a href="{% url 'LibroLink:register' %}">SignUp</a></li>
             <li><a href="{% url 'LibroLink:login' %}">Login</a></li>
         </ul>
