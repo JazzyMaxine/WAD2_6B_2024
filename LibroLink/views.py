@@ -1,20 +1,17 @@
-from django.shortcuts import render,get_object_or_404
-from django.http import HttpResponse
-from LibroLink.models import Book,BookCategory
-from LibroLink.models import Category
+from django.shortcuts import render, redirect, get_object_or_404
+from django.http import HttpResponse, JsonResponse
+from LibroLink.models import Book, BookCategory, Category
 from LibroLink.forms import UserForm,UserProfileForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
-from django.shortcuts import redirect
-from LibroLink.models import Friends
+from LibroLink.models import Friends, FriendRequest, UserProfile, User
 
 # Create your views here.
 def index(request):
     return render(request, 'LibroLink/index.html')
 
 def profile(request):
-    
     category_list = Category.objects.order_by('-likes')[:5]
     book_list = Book.objects.order_by('-title')[:5]
 
@@ -23,6 +20,58 @@ def profile(request):
     context_dict['book'] = book_list
 
     return render(request, 'LibroLink/profile.html', context=context_dict)
+
+
+# friend stuff
+def add_friend(request, friend_id):
+    if request.method == 'POST':
+        friend = get_object_or_404(user, id=friend_id)
+        user = request.user
+        if user == friend:
+            return JsonResponse({'success': False, 'error': 'You cannot add yourself as a friend.'})
+        if Friends.objects.filter(userA=user, userB=friend).exists() or Friends.objects.filter(userA=friend, userB=user).exists():
+            return JsonResponse({'success': False, 'error': 'This user is already your friend.'})
+        Friends.objects.create(userA=user, userB=friend)
+        Friends.objects.create(userA=friend, userB=user)
+        return JsonResponse({'success': True})
+    else:
+        return JsonResponse({'success': False, 'error': 'Invalid request method.'})
+
+def friends_list(request):
+    user_profile = request.user.profile
+    if user_profile:
+        friends = user_profile.friends.all()
+    else:
+        friends = []
+
+    return render(request, 'friends_list.html', {'friends': friends})
+
+def send_friend_request(request, recipient_id):
+    recipient = get_object_or_404(User, id=recipient_id)
+    if request.user == recipient:
+        return redirect('profile')  # Redirect back to profile
+    FriendRequest.objects.create(sender=request.user, recipient=recipient)
+    return redirect('profile')  # Redirect back to profile after sending request
+
+def accept_friend_request(request, request_id):
+    friend_request = get_object_or_404(FriendRequest, id=request_id, recipient=request.user)
+    friend_request.status = 'accepted'
+    friend_request.save()
+    return redirect('friend_requests')  # Redirect back to friend requests page after accepting request
+
+def reject_friend_request(request, request_id):
+    friend_request = get_object_or_404(FriendRequest, id=request_id, recipient=request.user)
+    friend_request.status = 'rejected'
+    friend_request.save()
+    return redirect('friend_requests')  # Redirect back to friend requests page after rejecting request
+
+def friend_requests(request):
+    pending_requests = FriendRequest.objects.filter(recipient=request.user, status='pending')
+    return render(request, 'friend_requests.html', {'pending_requests': pending_requests})
+
+
+
+
 
 def register(request):
     registered = False

@@ -24,7 +24,8 @@ class Category(models.Model):
         return self.name
 
 class UserProfile(models.Model): 
-    user = models.OneToOneField(User, on_delete=models.CASCADE) 
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile') 
+    friends = models.ManyToManyField(User, related_name='friends')
     website = models.URLField(blank=True) 
     picture = models.ImageField(upload_to='profile_images',blank=True) 
     
@@ -63,6 +64,20 @@ class Friends(models.Model):
         
     def __str__(self):
         return self.userA.username + ", " + self.userB.username
+    
+class FriendRequest(models.Model):
+    sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name='sent_requests')
+    recipient = models.ForeignKey(User, on_delete=models.CASCADE, related_name='received_requests')
+    STATUS_CHOICES = (
+        ('pending', 'Pending'), 
+        ('accepted', 'Accepted'), 
+        ('rejected', 'Rejected'),
+    )
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='pending')
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.sender} to {self.receipient}: {self.status}"
     
 class Message(models.Model):
     sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name="message_sender")

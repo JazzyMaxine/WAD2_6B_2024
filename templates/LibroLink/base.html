@@ -21,7 +21,11 @@
                 <a href="{% url 'LibroLink:profile' %}">
                     <img class="small-img" src="{% static 'images/userProfileIcon.png' %}" alt="User Profile Picture Placeholder"/>
                 </a>
-                <img class="small-img" src="{% static 'images/hamburgerButton.png' %}" alt="Dropdown Menu" />
+                {% if user.is_authenticated %}
+                <a href="{% url 'LibroLink:friends_list' %}">
+                <img class="small-img" src="{% static 'images/hamburgerButton.png' %}" alt="Friends" />
+                </a>
+                {% endif %}
             </nav>
             {% endblock %}
         </div>
