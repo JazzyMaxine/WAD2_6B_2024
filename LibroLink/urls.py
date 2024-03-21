@@ -13,6 +13,7 @@ urlpatterns = [
     path('privacy/', views.privacy, name='privacy'),
     path('books/', views.books, name='books'),
     path('books/<int:book_id>/', views.book_detail, name='book_detail'),
+    path('featured/', views.featured, name='featured'),
     # path('bookshelf/', views.bookshelf, name='bookshelf'),
     # path('settings/', views.accountSettings, name='settings'),
     # path('friends/', views.friends, name='friends'),
