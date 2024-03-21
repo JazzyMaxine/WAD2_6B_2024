@@ -13,3 +13,6 @@ class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         fields = ('picture',)
+
+class AddFriendForm(forms.Form):
+    username = forms.CharField(max_length=150, label='Friend Username')

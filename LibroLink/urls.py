@@ -13,6 +13,7 @@ urlpatterns = [
     path('help_support/', views.help_support, name='help_support'),
     path('privacy/', views.privacy, name='privacy'),
     path('books/', views.books, name='books'),
-    
+    path('friends/', views.friends_list, name='friends'),
+    path('add_friend/', views.add_friend, name='add_friend'),
     
 ]
