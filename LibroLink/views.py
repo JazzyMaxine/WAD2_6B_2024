@@ -5,23 +5,25 @@ from LibroLink.forms import UserForm,UserProfileForm
 from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
+from django.shortcuts import redirect
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from .forms import ReviewForm
+from .models import Review
+from django.views.generic.list import ListView
+from django.http import HttpResponseForbidden, HttpResponseRedirect
+from django.shortcuts import get_object_or_404, redirect
+from django.views.generic.edit import UpdateView
+from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin
 from LibroLink.models import Friends, FriendRequest, UserProfile, User
 
 User = get_user_model()
 
+
 # Create your views here.
 def index(request):
     return render(request, 'LibroLink/index.html')
-
-def profile(request):
-    category_list = Category.objects.order_by('-likes')[:5]
-    book_list = Book.objects.order_by('-title')[:5]
-
-    context_dict = {}
-    context_dict['categories'] = category_list
-    context_dict['book'] = book_list
-
-    return render(request, 'LibroLink/profile.html', context=context_dict)
 
 
 # friend stuff
@@ -127,7 +129,77 @@ def user_login(request):
             return HttpResponse("Invalid login details supplied.")
     else:
         return render(request, 'LibroLink/login.html')
+        
     
+@login_required
+def reviews(request):
+    form = ReviewForm()
+    context = {
+        'form': form,
+        'rating_choices': ['5', '4', '3', '2', '1']
+    }
+
+    if request.method == 'POST':
+        print(request.POST)
+        form = ReviewForm(request.POST, request.FILES)
+
+        if form.is_valid():
+            review = form.save(commit=False)
+            review.user = request.user  
+            review.save()
+            return redirect(reverse('LibroLink:review-list'))  
+        else:
+            print(form.errors, form.errors)  
+    
+    return render(request, 'LibroLink/reviews.html', context)
+
+
+
+class ReviewListView(ListView):
+    model = Review
+    template_name = 'LibroLink/reviews_list.html'  
+    context_object_name = 'reviews'
+    paginate_by = 10  
+
+    def get_queryset(self):
+        """Optionally, you can filter the reviews or order them differently."""
+        return Review.objects.order_by('-id')
+
+
+@login_required
+def delete_review(request, review_id):
+    review = get_object_or_404(Review, id=review_id)
+    if review.user != request.user and not request.user.is_superuser:
+        return HttpResponseForbidden("You are not allowed to delete this review.")
+    if request.method == 'POST':  
+        review.delete()
+        return redirect('LibroLink:review-list')  
+    else:
+        return render(request, 'LibroLink/confirm_delete.html', {'review': review})
+    
+class ReviewUpdateView(LoginRequiredMixin, UpdateView):
+    model = Review
+    fields = ['book_name', 'book_author', 'review_text', 'rating', 'book_image']
+    template_name = 'LibroLink/edit_review.html'
+    success_url = reverse_lazy('LibroLink:review-list')
+
+    def get_queryset(self):
+        """Allow users to edit only their own reviews unless they are superusers."""
+        queryset = super().get_queryset()
+        if not self.request.user.is_superuser:
+            queryset = queryset.filter(user=self.request.user)
+        return queryset
+    
+
+@login_required
+def profile(request):
+    user_profile = request.user.userprofile
+    context = {
+        'user': request.user,
+        'user_profile': user_profile
+    }
+    return render(request, 'LibroLink/profile.html', context)
+
 @login_required
 def user_logout(request):
     logout(request)
@@ -183,3 +255,4 @@ def book_detail(request, book_id):
 
 def featured(request):
     return render(request, 'LibroLink/featured.html')
+

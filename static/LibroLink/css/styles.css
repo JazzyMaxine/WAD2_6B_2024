@@ -1,3 +1,71 @@
+.review {
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+.star-rating {
+    direction: rtl; 
+    font-size: 0;
+}
+
+.star-rating input[type="radio"] {
+    display: none; 
+}
+
+.star-rating label {
+    font-size: 2em;
+    color: #ddd; 
+    cursor: pointer;
+}
+.star-rating input[type="radio"]:checked ~ label {
+    color: #ffc700; 
+}
+.star-rating label:hover,
+.star-rating label:hover ~ label {
+    color: #ffc700; 
+}
+
+#navbar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+}
+
+#navbar li {
+    float: left;
+}
+
+#navbar li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+#navbar li a:hover {
+    background-color: #111;
+}
+
+.add-review-button {
+    display: block;
+    margin: 20px 0;
+    padding: 10px 20px;
+    background-color: #5cb85c; 
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.add-review-button:hover {
+    background-color: #4cae4c; 
+}
+
 div.content_box {
     border-radius: 15px;
     background-color: #CCD5FF;
