@@ -1,15 +1,11 @@
+{% extends 'LibroLink/base.html' %}
 {% load staticfiles %}
-<!DOCTYPE html>
 
-{% block title %}
+{% block title_block %}
     Update Profile
 {% endblock %}
 
-{% block header %}
-    Change Profile
-{% endblock %}
-
-{% block forms %}
+{% block body_block %}
         <form id= "user_form" method="post" action="{% url 'register' %}"
     enctype="multipart/form-data">
 
