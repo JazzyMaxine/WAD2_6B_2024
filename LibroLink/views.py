@@ -1,11 +1,12 @@
-from django.shortcuts import render
+from django.shortcuts import render,get_object_or_404
 from django.http import HttpResponse
-from LibroLink.models import Book
-##from LibroLink.models import Category
+from LibroLink.models import Book,BookCategory
+from LibroLink.models import Category
 from LibroLink.forms import UserForm,UserProfileForm
 from django.contrib.auth import authenticate, login
 from django.urls import reverse
 from django.shortcuts import redirect
+from LibroLink.models import Friends
 
 # Create your views here.
 def index(request):
@@ -13,8 +14,8 @@ def index(request):
 
 def profile(request):
     
-    category_list = Category.objects.order_by('-activity')[:5]
-    book_list = Book.objects.order_by('-readingOrder')[:5]
+    category_list = Category.objects.order_by('-likes')[:5]
+    book_list = Book.objects.order_by('-title')[:5]
 
     context_dict = {}
     context_dict['categories'] = category_list
@@ -75,6 +76,27 @@ def user_login(request):
     else:
         return render(request, 'LibroLink/login.html')
 
+
+def show_category(request, category_name_slug):
+    
+    context_dict = {}
+
+    try:
+
+        category = Category.objects.get(slug=category_name_slug)
+        books = Book.objects.filter(category=category)
+        context_dict['books'] = books
+        context_dict['category'] = category
+    
+    except Category.DoesNotExist:
+
+        context_dict['category'] = None
+        context_dict['books'] = None
+
+    
+    return render(request, 'LibroLink/category.html', context=context_dict)
+
+
 def book_search(request):
     query = request.GET.get('searchQuery') 
     if query:
@@ -90,8 +112,10 @@ def help_support(request):
 def privacy(request):
     return render(request, 'LibroLink/privacy.html')
 
-
 def books(request):
-    books = Book.objects.all().order_by('title')  
-    return render(request, 'LibroLink/books.html',{'books': books})
+    categories = BookCategory.objects.all()
+    return render(request, 'LibroLink/books.html', {'categories': categories})
 
+def book_detail(request, book_id):
+    book = get_object_or_404(Book, id=book_id)
+    return render(request, 'LibroLink/book_detail.html', {'book': book})
