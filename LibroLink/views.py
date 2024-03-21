@@ -1,11 +1,12 @@
 from django.shortcuts import render,get_object_or_404
 from django.http import HttpResponse
-from LibroLink.models import Book,BookCategory
+from LibroLink.models import Book,BookCategory, Page, Featured
 from LibroLink.models import Category
 from LibroLink.forms import UserForm,UserProfileForm
 from django.contrib.auth import authenticate, login
 from django.urls import reverse
 from django.shortcuts import redirect
+from django.db.models import Count
 from LibroLink.models import Friends
 
 # Create your views here.
