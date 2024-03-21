@@ -163,7 +163,6 @@ def populate():
     ]
 
 
-
     for book in books.items():
         b = add_book(book['isbn'], book['title'], book['author'], book['publisher'])
 
