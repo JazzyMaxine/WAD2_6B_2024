@@ -79,19 +79,19 @@ def populate():
         {
             'sender':'lucas',
             'receiver':'nathan',
-            'timeSent':datetime(2023,03,20,12,05,57,5555),
+            'timeSent':datetime(2023,3,20,12,5,57,5555),
             'content':'Are we real?'
         },
         {
             'sender':'nathan',
             'receiver':'lucas',
-            'timeSent':datetime(2023,03,20,12,06,57,4563),
+            'timeSent':datetime(2023,3,20,12,6,57,4563),
             'content':'No, we are merely vessels for example data. Sorry.'
         },
         {
             'sender':'lucas',
             'receiver':'nathan',
-            'timeSent':datetime(2023,03,20,12,07,57,7643),
+            'timeSent':datetime(2023,3,20,12,7,57,7643),
             'content':'Shame.'
         }
     ]
@@ -100,13 +100,13 @@ def populate():
         {
             'user':'lucas',
             'page':'1',
-            'timePosted':datetime(2023,03,20,12,07,57,7643),
+            'timePosted':datetime(2023,3,20,12,7,57,7643),
             'content':'Ever heard of cheese? Good stuff. You can get yellow cheese, white cheese, blue cheese, red cheese. Probably purple cheese if you look close enough. Man, cheese is good.'
         },
         {
             'user':'nathan',
             'page':'2',
-            'timePosted':datetime(2023,03,20,12,06,57,4563),
+            'timePosted':datetime(2023,3,20,12,6,57,4563),
             'content':'I am afraid of big bugs. They keep bothering me.'
         }
     ]
@@ -137,7 +137,7 @@ def populate():
         {
             'user':'lucas',
             'book':'9780141439471',
-            'dateFinished':datetime(2023,03,20,12,06,57,4563)
+            'dateFinished':datetime(2023,3,20,12,6,57,4563)
         }
     ]
 
