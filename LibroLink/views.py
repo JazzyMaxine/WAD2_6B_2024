@@ -10,6 +10,8 @@ from LibroLink.models import Friends
 from django.contrib.auth.decorators import login_required
 from LibroLink.models import UserProfile
 from django.contrib import messages
+from django.shortcuts import get_object_or_404
+from django.contrib.auth.models import User
 
 # Create your views here.
 def index(request):
@@ -160,3 +162,20 @@ def add_friend(request):
     else:
         form = AddFriendForm()
     return render(request, 'LibroLink/add_friend.html', {'form': form})
+
+# def public_profile(request, user):
+#     userInstance = UserProfile.objects.get(user=user)
+#     context = {'username': userInstance.user.username,
+#                'user': userInstance.user}
+    
+#     return render(request, 'LibroLink/publicProfile.html', context)
+
+def public_profile(request, username):
+    # Get the User object based on the provided username
+    user = get_object_or_404(User, username=username)
+    
+    # Get the associated UserProfile using the OneToOneField 'user'
+    user_profile = get_object_or_404(UserProfile, user=user)
+    
+    context = {'user': user, 'user_profile': user_profile}
+    return render(request, 'LibroLink/publicProfile.html', context)

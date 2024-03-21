@@ -15,5 +15,6 @@ urlpatterns = [
     path('books/', views.books, name='books'),
     path('friends/', views.friends_list, name='friends'),
     path('add_friend/', views.add_friend, name='add_friend'),
+    path('profile/<str:username>/', views.public_profile, name='user_profile'),
     
 ]
