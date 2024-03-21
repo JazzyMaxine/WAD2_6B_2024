@@ -13,21 +13,17 @@
         <script src="{% static 'LibroLink/js/script.js' %}"></script>
     </head>
     <body>
-        <div>
-            {% block nav_bar %}
-            <nav>
-                <a href="{% url 'LibroLink:index' %}"><h2>LibroLink</h2></a>
-                <h2>{{ page.name }}</h2>
-                <a href="{% url 'LibroLink:profile' %}">
-                    <img class="small-img" src="{% static 'images/userProfileIcon.png' %}" alt="User Profile Picture Placeholder"/>
-                </a>
-                {% if user.is_authenticated %}
-                <a href="{% url 'LibroLink:friends_list' %}">
-                <img class="small-img" src="{% static 'images/hamburgerButton.png' %}" alt="Friends" />
-                </a>
-                {% endif %}
-            </nav>
-            {% endblock %}
+        <div id="navbar">
+            <a href="{% url 'LibroLink:index' %}"><h2>LibroLink</h2></a>
+            <h2>{{ page.name }}</h2>
+            <a href="{% url 'LibroLink:profile' %}">
+                <img class="small-img" src="{% static 'images/userProfileIcon.png' %}" alt="User Profile Picture Placeholder"/>
+            </a>
+            {% if user.is_authenticated %}
+            <a href="{% url 'LibroLink:friends_list' %}">
+            <img class="small-img" src="{% static 'images/hamburgerButton.png' %}" alt="Friends" />
+            </a>
+            {% endif %}
         </div>
         <div>
             {% block body_block %}

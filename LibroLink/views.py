@@ -2,10 +2,12 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, JsonResponse
 from LibroLink.models import Book, BookCategory, Category
 from LibroLink.forms import UserForm,UserProfileForm
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from LibroLink.models import Friends, FriendRequest, UserProfile, User
+
+User = get_user_model()
 
 # Create your views here.
 def index(request):
@@ -38,7 +40,7 @@ def add_friend(request, friend_id):
         return JsonResponse({'success': False, 'error': 'Invalid request method.'})
 
 def friends_list(request):
-    user_profile = request.user.profile
+    user_profile = getattr(request.user, 'profile', None)
     if user_profile:
         friends = user_profile.friends.all()
     else:
