@@ -15,7 +15,7 @@
             {% for book in category.books.all %}
             <div class="book">
                 
-                <h3><a href="{% url 'books_detail' book.id %}">{{ book.title }}</a></h3>
+                <h3><a href="{% url 'LibroLink:books_detail' book.id %}">{{ book.title }}</a></h3>
                 <p>Author: {{ book.author }}</p>
                 <p>Publisher: {{ book.publisher }}</p>
             </div>
