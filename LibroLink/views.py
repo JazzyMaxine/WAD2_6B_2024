@@ -1,9 +1,9 @@
-from django.shortcuts import render
-from django.http import HttpResponse
-#from LibroLink.models import Book
-#from LibroLink.models import Category
+from django.shortcuts import render, redirect, get_object_or_404
+from django.http import HttpResponse, JsonResponse
+from LibroLink.models import Book, BookCategory, Category
 from LibroLink.forms import UserForm,UserProfileForm
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout, get_user_model
+from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
@@ -16,13 +16,66 @@ from django.shortcuts import get_object_or_404, redirect
 from django.views.generic.edit import UpdateView
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
+from LibroLink.models import Friends, FriendRequest, UserProfile, User
 
-
+User = get_user_model()
 
 
 # Create your views here.
 def index(request):
     return render(request, 'LibroLink/index.html')
+
+
+# friend stuff
+def add_friend(request, friend_id):
+    if request.method == 'POST':
+        friend = get_object_or_404(user, id=friend_id)
+        user = request.user
+        if user == friend:
+            return JsonResponse({'success': False, 'error': 'You cannot add yourself as a friend.'})
+        if Friends.objects.filter(userA=user, userB=friend).exists() or Friends.objects.filter(userA=friend, userB=user).exists():
+            return JsonResponse({'success': False, 'error': 'This user is already your friend.'})
+        Friends.objects.create(userA=user, userB=friend)
+        Friends.objects.create(userA=friend, userB=user)
+        return JsonResponse({'success': True})
+    else:
+        return JsonResponse({'success': False, 'error': 'Invalid request method.'})
+
+def friends_list(request):
+    user_profile = getattr(request.user, 'profile', None)
+    if user_profile:
+        friends = user_profile.friends.all()
+    else:
+        friends = []
+
+    return render(request, 'friends_list.html', {'friends': friends})
+
+def send_friend_request(request, recipient_id):
+    recipient = get_object_or_404(User, id=recipient_id)
+    if request.user == recipient:
+        return redirect('profile')  # Redirect back to profile
+    FriendRequest.objects.create(sender=request.user, recipient=recipient)
+    return redirect('profile')  # Redirect back to profile after sending request
+
+def accept_friend_request(request, request_id):
+    friend_request = get_object_or_404(FriendRequest, id=request_id, recipient=request.user)
+    friend_request.status = 'accepted'
+    friend_request.save()
+    return redirect('friend_requests')  # Redirect back to friend requests page after accepting request
+
+def reject_friend_request(request, request_id):
+    friend_request = get_object_or_404(FriendRequest, id=request_id, recipient=request.user)
+    friend_request.status = 'rejected'
+    friend_request.save()
+    return redirect('friend_requests')  # Redirect back to friend requests page after rejecting request
+
+def friend_requests(request):
+    pending_requests = FriendRequest.objects.filter(recipient=request.user, status='pending')
+    return render(request, 'friend_requests.html', {'pending_requests': pending_requests})
+
+
+
+
 
 def register(request):
     registered = False
@@ -76,8 +129,7 @@ def user_login(request):
             return HttpResponse("Invalid login details supplied.")
     else:
         return render(request, 'LibroLink/login.html')
-    
-    
+        
     
 @login_required
 def reviews(request):
@@ -147,3 +199,60 @@ def profile(request):
         'user_profile': user_profile
     }
     return render(request, 'LibroLink/profile.html', context)
+
+@login_required
+def user_logout(request):
+    logout(request)
+    HttpResponse("You have successfully logged out :)")
+    return redirect(reverse('LibroLink:index'))
+
+@login_required
+def restricted(request):
+    return HttpResponse("NOPE!")
+
+def show_category(request, category_name_slug):
+    
+    context_dict = {}
+
+    try:
+
+        category = Category.objects.get(slug=category_name_slug)
+        books = Book.objects.filter(category=category)
+        context_dict['books'] = books
+        context_dict['category'] = category
+    
+    except Category.DoesNotExist:
+
+        context_dict['category'] = None
+        context_dict['books'] = None
+
+    
+    return render(request, 'LibroLink/category.html', context=context_dict)
+
+
+def book_search(request):
+    query = request.GET.get('searchQuery') 
+    if query:
+        books = Book.objects.filter(title__icontains=query)
+    else:
+        books = None 
+    return render(request, 'LibroLink/search_results.html', {'books': books})
+
+
+def help_support(request):
+    return render(request, 'LibroLink/help_support.html')
+
+def privacy(request):
+    return render(request, 'LibroLink/privacy.html')
+
+def books(request):
+    categories = BookCategory.objects.all()
+    return render(request, 'LibroLink/books.html', {'categories': categories})
+
+def book_detail(request, book_id):
+    book = get_object_or_404(Book, id=book_id)
+    return render(request, 'LibroLink/book_detail.html', {'book': book})
+
+def featured(request):
+    return render(request, 'LibroLink/featured.html')
+

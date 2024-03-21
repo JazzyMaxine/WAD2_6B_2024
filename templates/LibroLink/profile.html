@@ -1,12 +1,73 @@
 {% extends 'LibroLink/base.html' %}
+{% load staticfiles %}
 
-{% block content %}
-  <h1>User Profile</h1>
-  <p>Username: {{ user.username }}</p>
-  <p>Email: {{ user.email }}</p>
-  <!-- If you have additional fields on the UserProfile model, you can display them here -->
-  <p>Website: {{ user_profile.website }}</p>
-  {% if user_profile.picture %}
-    <img src="{{ user_profile.picture.url }}" alt="Profile picture">
-  {% endif %}
+{% block title_block %}
+    Profile
 {% endblock %}
+
+{% block body_block %}
+<div>    
+    {% if user.profile.profile_picture %}
+
+        <img src="{{ MEDIA_URL }}{{ request.user.profile.profile_picture }}" alt="Profile Picture" class="userProfilePicture" />
+
+    {% else %}
+
+        <img src="{% static 'placeHolderUserIcon.jpg' %}" class="defaultProfilePicture" />
+
+    {% endif %}
+
+    <p>Change Profile Picture</p>
+</div>
+<div>
+    <h2>Current Book</h2>
+    <img src="{{ MEDIA_URL }}{{ book.image.url }}" alt="Currently Read Book Picture" />
+</div>
+<div>
+    <h2>My Books</h2>
+    {% if books %}
+    <ul>
+    {% for book in books %}
+        <li>
+            <a href="{% url 'LibroLink:show_book' book.slug %}">
+            {{ book.name }}
+        </li>
+    {% endfor %}
+    </ul>
+    {% else %}
+    <strong>You do not currently have any books.</strong>
+    {% endif %}
+</div>
+
+<div>
+    <h2>Friends</h2>
+    {% if friendship %}
+    <ul>
+    {% for friendship in friendship %}
+        <li>
+            {{ friendship.user1.username }} and {{ friendship.user2.username }}
+        </li>
+    {% endfor %}
+    </ul>
+    {% else %}
+    <strong>You do not currently have any friends.</strong>
+    {% endif %}
+</div>
+
+<div>
+    <h2>Categories</h2>
+    {% if categories %}
+    <ul>
+    {% for category in categories %}
+        <li>
+            <a href="{% url 'LibroLink:show_category' category.slug %}">
+            {{ category.name }}
+        </li>
+    {% endfor %}
+    </ul>
+    {% else %}
+    <strong>You are not currently subscribed to any categories.</strong>
+    {% endif %}
+
+</div>
+{% endblock %} 

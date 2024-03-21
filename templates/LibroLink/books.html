@@ -1,0 +1,27 @@
+{% extends 'LibroLink/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+    Books
+{% endblock %}
+
+{% block body_block %}
+<main class="container">
+    <h1>Explore Books by Category</h1>
+    {% for category in categories %}
+    <div class="category">
+        <h2>{{ category.name }}</h2>
+        <div class="grid">
+            {% for book in category.books.all %}
+            <div class="book">
+                
+                <h3><a href="{% url 'books_detail' book.id %}">{{ book.title }}</a></h3>
+                <p>Author: {{ book.author }}</p>
+                <p>Publisher: {{ book.publisher }}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endfor %}
+</main>
+{% endblock %}
