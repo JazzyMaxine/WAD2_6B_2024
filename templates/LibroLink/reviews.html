@@ -1,6 +1,6 @@
 {% extends 'LibroLink/base.html' %}
 
-{% block content %}
+{% block body_block %}
   <h2>Submit a Book Review</h2>
   <form id="review_form" method="post" action="/LibroLink/reviews/" enctype="multipart/form-data">
       {% csrf_token %}
