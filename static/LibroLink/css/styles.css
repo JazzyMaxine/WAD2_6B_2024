@@ -36,10 +36,13 @@
     padding: 0;
     overflow: hidden;
     background-color: #333;
+    display: flex;
+    /* justify-content: space-between; */
+    align-items: center;
 }
 
 #navbar li {
-    float: left;
+    display: inline;
 }
 
 #navbar li a {
@@ -52,6 +55,14 @@
 
 #navbar li a:hover {
     background-color: #111;
+}
+
+#navbar li :last-child{
+    margin-left: auto;
+}
+
+#navbar li:not(:last-child) {
+    margin-right: 20px;
 }
 
 .add-review-button {

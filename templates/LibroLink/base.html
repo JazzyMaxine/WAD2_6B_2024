@@ -17,13 +17,10 @@
             <ul>
             <li><a href="{% url 'LibroLink:index' %}"><h2>LibroLink</h2></a></li>
             <h2>{{ page.name }}</h2>
-            <li><a href="{% url 'LibroLink:profile' %}">
-                <img class="small-img" src="{% static 'images/userProfileIcon.png' %}" alt="User Profile Picture Placeholder"/>
-            </a></li>
             <li><a href="{% url 'LibroLink:review-list' %}">Reviews</a></li>
             {% if user.is_authenticated %}
             <li><a href="{% url 'LibroLink:friends_list' %}">
-            <img class="small-img" src="{% static 'images/hamburgerButton.png' %}" alt="Friends" />
+            Friends List
             </a></li>
             {% endif %}
             {% if not user.is_authenticated %}
@@ -31,8 +28,10 @@
                 <li><a href="{% url 'LibroLink:login' %}">Login</a></li>
             {% else %}
                 <li><a href="{% url 'LibroLink:logout' %}">Logout</a></li>
-                <li><a href="{% url 'LibroLink:restricted' %}">Restricted Content</a></li>
             {% endif %}
+            <li><a href="{% url 'LibroLink:profile' %}">
+                <img id="profile-img" class="small-img" src="{% static 'images/userProfileIcon.png' %}" alt="User Profile Picture Placeholder"/>
+            </a></li>
             </ul>
         </div>
         <div>
@@ -43,12 +42,11 @@
 
         <footer>
             <div style="display: flex; justify-content: space-between;">
-                <div>
+                
                     <ul style="list-style-type: none; padding: 0;">
                         <li><a href="{% url 'LibroLink:help_support' %}">Help & Support</a></li>
                         <li><a href="{% url 'LibroLink:privacy' %}">Privacy Policy</a></li>
                     </ul>
-                </div>
             </div>
         </footer>
     </body>
