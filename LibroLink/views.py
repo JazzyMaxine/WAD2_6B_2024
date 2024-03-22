@@ -18,6 +18,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from LibroLink.models import Friends, FriendRequest, UserProfile, User
 from django.db.models import Count, Q
 from LibroLink.forms import UserForm, UserProfileForm, AddFriendForm
+from django.core.exceptions import ObjectDoesNotExist
 
 User = get_user_model()
 
@@ -213,7 +214,6 @@ def show_category(request, category_name_slug):
     context_dict = {}
 
     try:
-
         category = Category.objects.get(slug=category_name_slug)
         books = Book.objects.filter(category=category)
         context_dict['books'] = books
@@ -262,8 +262,8 @@ def profile(request):
 
 @login_required
 def friends_list(request):
-    user_profile = UserProfile.objects.get(user=request.user)
-    if user_profile:
+    try:
+        user_profile = UserProfile.objects.get(user=request.user)
         friends = Friends.objects.filter(Q(userA=user_profile.user) | Q(userB=user_profile.user))
         friends_list = []
         for friend in friends:
@@ -274,8 +274,8 @@ def friends_list(request):
         context = {
             'friends_list': friends_list
         }
-    else:
-        context = {}
+    except ObjectDoesNotExist:
+        context = {'friends_list': []}
     return render(request, 'LibroLink/friends.html', context)
 
 
@@ -285,22 +285,31 @@ def add_friend(request):
         form = AddFriendForm(request.POST)
         if form.is_valid():
             username = form.cleaned_data['username']
+            sender = request.user
             try:
-                friend_profile = UserProfile.objects.get(user__username=username)
-                user_profile = UserProfile.objects.get(user=request.user)
-                if Friends.objects.filter(userA=user_profile.user, userB=friend_profile.user).exists() or \
-                        Friends.objects.filter(userA=friend_profile.user, userB=user_profile.user).exists():
-                    messages.error(request, 'You are already friends with {}'.format(username))
-                elif user_profile.user == friend_profile.user:
-                    messages.error(request, 'You cannot add yourself as a friend')
-                else:
-                    Friends.objects.create(userA=user_profile.user, userB=friend_profile.user)
-                    messages.success(request, 'Friend request sent to {}'.format(username))
-            except UserProfile.DoesNotExist:
-                messages.error(request, 'User with username {} does not exist'.format(username))
+                recipient = User.objects.get(username=username)
+            except ObjectDoesNotExist:
+                return HttpResponseRedirect(reverse('LibroLink:user_not_found', args=(username,)))
+            
+            existing_request = FriendRequest.objects.filter(sender=sender, recipient=recipient).exists()
+            if existing_request:
+                messages.error(request, f"Friend request already sent to {username}")
+            elif recipient == sender:
+                messages.error(request, "You cannot send a friend request to yourself")
+            else:
+                FriendRequest.objects.create(sender=sender, recipient=recipient)
+                messages.success(request, f"Friend request sent to {username}")
+                return redirect('LibroLink:add_friend')
     else:
         form = AddFriendForm()
     return render(request, 'LibroLink/add_friend.html', {'form': form})
+
+def user_not_found(request, username):
+    return render(request, 'LibroLink/user_not_found.html', {'username': username})
+
+def friend_requests(request):
+    received_requests = FriendRequest.objects.filter(recipient=request.user, status='pending')
+    return render(request, 'LibroLink/friend_requests.html', {'received_requests': received_requests})
 
 def public_profile(request, username):
     # Get the User object based on the provided username

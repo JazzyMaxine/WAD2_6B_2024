@@ -2,14 +2,16 @@
 {% load static %}
 
 {% block title_block %}
-    Friends List
+    Friends
 {% endblock %} 
 
 {% block body_block %} 
-    <h1>Friends List</h1>
+    <h1>Friends</h1>
     <ul>
         {% for friend in friends_list %}
             <li>{{ friend.username }}</li>
         {% endfor %}
     </ul>
+
+    <a href="{% url 'LibroLink:add_friend' %}">Add Friend</a>
 {% endblock %} 
