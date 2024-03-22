@@ -26,6 +26,10 @@
     color: #ffc700; 
 }
 
+#navbar {
+    padding-bottom:10px;
+}
+
 #navbar ul {
     list-style-type: none;
     margin: 0;
@@ -81,17 +85,37 @@ div.content_box {
     border-radius: 15px;
     background-color: #CCD5FF;
     padding: 20px;
-    width: fit-content;
-    height: fit-content;
+    width:fit-content;
+}
+
+div.flex_box {
+    gap: 10px;
+    clear: both;
+    display: flex;
+    width:fit-content;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: flex-start;
+	align-items: stretch;
+	align-content: stretch;
 }
 
 div.book_preview {
     border-radius: 10px;
     background-color: #838E83;
     padding: 10px;
-    width: fit-content;
-    height: fit-content;
+    clear: both;
+    display: flex;
+    width:fit-content;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: flex-start;
+	align-items: stretch;
+	align-content: stretch;
+}
 
+div.book_info {
+    padding-left: 10px;
 }
 
 body, html {
