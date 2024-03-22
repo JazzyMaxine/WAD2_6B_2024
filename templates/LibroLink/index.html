@@ -10,7 +10,6 @@
         <section>
             <h1>Welcome to LibroLink Reading Platform</h1>
             <p>Please start reading and share with your friends!</p>
-            <p><a href="{% url 'LibroLink:books' %}">My Books</a></p>
             <form action="{% url 'LibroLink:book_search' %}" method="get" class="search-bar">
                 <input type="text" id="searchQuery" name="searchQuery" placeholder="Search for books..." aria-label="Search books" required>
                 <button type="submit">Search</button>

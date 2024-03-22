@@ -41,5 +41,8 @@ urlpatterns = [
     path('profile/<str:username>/', views.public_profile, name='user_profile'),
     path('add_book/', views.add_book, name='add_book'),
     path('thank_you/', views.thank_you, name='thank_you'),
+    
+    path('library/', views.books, name='books'),
+
 ]
 
