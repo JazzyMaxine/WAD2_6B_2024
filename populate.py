@@ -34,56 +34,78 @@ def populate():
             'title':'The Great Gatsby',
             'author':'F. Scott Fitzgerald',
             'publisher':'Penguin Classics'
+        },
+        {
+            'isbn':'9781087964669',
+            'title':'The Great Gatsby: But Nick has Scoliosis',
+            'author':'Dick Cody Heese',
+            'publisher':'Dick Cody Heese'
+        },
+        {
+            'isbn':'9780385339032',
+            'title':'Screenplay: The Foundations of Screenwriting',
+            'author':'Syd Field',
+            'publisher':'Random House Publishing Group'
         }
     ]
 
     users = [
         {
-            'username':'blitz-paper-aliens-aoeshetynasohietnasi',
-            'password':'blitz-paper-aliens',
+            'username':'SaulGoodman',
+            'password':'b3tt3rc4lls4ul',
         },
         {
-            'username':'alias-purifier-disdain-aouhtnasoheitnshapiotniasohet',
-            'password':'alias-purifier-disdain',
+            'username':'RustCohle',
+            'password':'t1me1s4fl4tc1rcle',
         },
         {
-            'username':'crabbing-precook-kept-ashtoezmxcazhzxctasht',
-            'password':'crabbing-precook-kept',
+            'username':'ClarkKent',
+            'password':'n0tSup3rman',
         },
         {
-            'username':'confined-shredding-satchel-hiteanshitoeaashitoeanshtioeannsh',
-            'password':'confined-shredding-satchel',
+            'username':'SarahConnor',
+            'password':'n0Futur3butwh4tw3m4k3f0r0urs3lv3s',
         },
+        {
+            'username':'AnakinSkywalker',
+            'password':'j3d1ord3r'
+        }
     ]
 
     readings = [
         {
-            'user':'blitz-paper-aliens-aoeshetynasohietnasi',
+            'user':'RustCohle',
             'book':'9780450054655',
         },
     ]
 
     reviews = [
         {
-            'user':'blitz-paper-aliens-aoeshetynasohietnasi',
+            'user':'AnakinSkywalker',
             'book':'9780450054655',
-            'text':'best book ever',
-            'rating':5,
+            'text':'Too much sand.',
+            'rating':1
         },
+        {
+            'user':'SaulGoodman',
+            'book':'9780141439471',
+            'text':'Wow, he could have just not done all that, huh.',
+            'rating':4
+        }
     ]
 
     friends = [
         {
-            'a':'blitz-paper-aliens-aoeshetynasohietnasi',
-            'b':'alias-purifier-disdain-aouhtnasoheitnshapiotniasohet',
+            'a':'ClarkKent',
+            'b':'SarahConnor',
             'date':datetime(2023,3,20,12,6,57,4563, tzinfo=pytz.UTC),
         },
     ]
 
     friend_requests = [
         {
-            'a':'crabbing-precook-kept-ashtoezmxcazhzxctasht',
-            'b':'confined-shredding-satchel-hiteanshitoeaashitoeanshtioeannsh',
+            'a':'SaulGoodman',
+            'b':'RustCohle',
             'date':datetime(2023,3,20,12,6,57,4563, tzinfo=pytz.UTC),
             'status':'pending'
         },
