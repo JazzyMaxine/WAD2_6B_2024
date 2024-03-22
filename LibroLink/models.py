@@ -133,6 +133,8 @@ class Book(models.Model):
     author = models.CharField(max_length = 200)
     publisher = models.CharField(max_length = 200)
     category = models.ForeignKey(BookCategory, related_name='books', on_delete=models.CASCADE, null=True, blank=True)
+    image = models.ImageField(upload_to='book_covers/', blank=True, null=True)
+
 
     def __str__(self):
         return self.title

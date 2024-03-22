@@ -19,6 +19,15 @@ from LibroLink.models import Friends, FriendRequest, UserProfile, User
 from django.db.models import Count, Q
 from LibroLink.forms import UserForm, UserProfileForm, AddFriendForm
 from django.core.exceptions import ObjectDoesNotExist
+from django.db.models import Count
+from LibroLink.forms import UserForm,UserProfileForm, AddFriendForm
+from .forms import BookSubmissionForm
+from .models import Reading, Read
+from datetime import datetime
+from django.contrib.auth.decorators import login_required
+from .forms import BookSubmissionForm
+from django.db.models import Q
+from django.shortcuts import render
 
 User = get_user_model()
 
@@ -198,15 +207,8 @@ def book_detail(request, book_id):
     return render(request, 'LibroLink/book_detail.html', {'book': book})
 
 def featured(request):
-    pages = Page.objects.all().annotate(num_followers=Count('followers')).order_by('num_followers')[:5]
-    books = {}
-    for featured in Featured.objects.all():
-        if featured.page in pages:
-            if not books.has_key(featured.page):
-                books[featured.page] = []
-            books[featured.page].append(featured.book)
-    context = {'pages': pages,
-               'books': books}
+    books = Book.objects.all().annotate(num_readers=Count('reading')).order_by('num_readers')[:10]
+    context = {'books': books}
     return render(request, 'LibroLink/featured.html', context=context)
 
 def show_category(request, category_name_slug):
@@ -231,7 +233,12 @@ def show_category(request, category_name_slug):
 def book_search(request):
     query = request.GET.get('searchQuery') 
     if query:
-        books = Book.objects.filter(title__icontains=query)
+        books = Book.objects.filter(
+            Q(isbn__icontains=query) | 
+            Q(title__icontains=query) |
+            Q(author__icontains=query) |
+            Q(publisher__icontains=query)
+        )
     else:
         books = None 
     return render(request, 'LibroLink/search_results.html', {'books': books})
@@ -336,11 +343,32 @@ def reject_request(request, request_id):
     return redirect('LibroLink:friends_list')
 
 def public_profile(request, username):
-    # Get the User object based on the provided username
     user = get_object_or_404(User, username=username)
     
-    # Get the associated UserProfile using the OneToOneField 'user'
     user_profile = get_object_or_404(UserProfile, user=user)
-    
+
     context = {'user': user, 'user_profile': user_profile}
     return render(request, 'LibroLink/publicProfile.html', context)
+
+@login_required
+def add_book(request):
+    if request.method == 'POST':
+        form = BookSubmissionForm(request.POST, request.FILES)
+        if form.is_valid():
+            book = form.save(commit=False)
+            book.user = request.user  
+            book.save()  
+            status = form.cleaned_data['status']
+            if status == 'reading':
+                Reading.objects.create(user=request.user, book=book)
+            else:  
+                Read.objects.create(user=request.user, book=book, dateFinished=datetime.now())
+            return redirect('LibroLink:thank_you')  
+    else:
+        form = BookSubmissionForm()
+    return render(request, 'LibroLink/add_book.html', {'form': form})
+
+
+@login_required
+def thank_you(request):
+    return render(request, 'LibroLink/thank_you.html')

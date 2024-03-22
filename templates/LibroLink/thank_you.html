@@ -1,0 +1,15 @@
+{% extends 'LibroLink/base.html' %}
+
+{% block title_block %}
+Thank You
+{% endblock %}
+
+{% block body_block %}
+<div class="container text-center">
+  <h1>Thanks for adding your book!</h1>
+  <p>Your contribution to our library is much appreciated.</p>
+  <a href="{% url 'LibroLink:index' %}" class="btn btn-primary">Go to Homepage</a>
+  <a href="{% url 'LibroLink:add_book' %}" class="btn btn-secondary">Add Another Book</a>
+  <a href="{% url 'LibroLink:review-list' %}" class="btn btn-info">View Reviews</a>
+</div>
+{% endblock %}
