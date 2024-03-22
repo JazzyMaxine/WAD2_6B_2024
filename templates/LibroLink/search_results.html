@@ -2,22 +2,24 @@
 {% load staticfiles %}
 
 {% block title_block %}
-    Search Results
+Search Results
 {% endblock %}
 
 {% block body_block %}
 <main class="container">
-    <h1>Search Results for "{{ query }}"</h1>
-    {% if books %}
-        <ul>
-            {% for book in books %}
-                <li>
-                    <a href="{% url 'LibroLink:books_detail' book.id %}">{{ book.title }}</a> by {{ book.author }} (Publisher: {{ book.publisher }})
-                </li>
-            {% endfor %}
-        </ul>
+    <h1>Search Results</h1>
+    {% if results.exists %}
+    <ul>
+        {% for book in results %}
+        <li>
+            <h2>{{ book.title }}</h2>
+            <p>{{ book.author }}</p>
+        </li>
+        {% endfor %}
+    </ul>
     {% else %}
-        <p>No books found for "{{ query }}".</p>
+    <p>No results found for your search.</p>
     {% endif %}
 </main>
 {% endblock %}
+

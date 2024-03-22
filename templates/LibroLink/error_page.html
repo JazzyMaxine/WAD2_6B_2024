@@ -1,0 +1,14 @@
+{% extends 'LibroLink/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+Error
+{% endblock %}
+
+{% block body_block %}
+<main class="container">
+    <h1>Error</h1>
+    <p>{{ error_message }}</p>
+    <a href="{% url 'LibroLink:index' %}">Return to home page</a>
+</main>
+{% endblock %}

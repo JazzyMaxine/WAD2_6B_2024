@@ -20,12 +20,11 @@ urlpatterns = [
     path('help_support/', views.help_support, name='help_support'),
     path('privacy/', views.privacy, name='privacy'),
     path('books/', views.books, name='books'),
+    path('search/', views.book_search, name='book_search'),
+    path('error/', views.error_page, name='error_page'),
     path('books/<int:book_id>/', views.book_detail, name='book_detail'),
     path('featured/', views.featured, name='featured'),
-    path('add_friend/<int:friend_id>/', views.add_friend, name='add_friend'),
-    # path('bookshelf/', views.bookshelf, name='bookshelf'),
-    # path('settings/', views.accountSettings, name='settings'),
     path('friends/', views.friends_list, name='friends_list'),
-    # path('category/<slug:category_name_slug>/', views.show_category, name='show_category'),
-    path('add_book/', add_book, name='add_book')
+    path('add_friend/', views.add_friend, name='add_friend'),
+    path('profile/<str:username>/', views.public_profile, name='user_profile'),
 ]
