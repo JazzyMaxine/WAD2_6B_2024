@@ -13,13 +13,10 @@
         <div class="flex_box">
             {% for book in books %}
                 <div class="book_preview">
-                    <div>
-                        <img src="{% static 'images/books.jpg' %}" alt=book.title height="100px"/>
-                    </div>
                     <div class="book_info">
-                        <p>{{ book.title }}</p>
-                        <p>{{ book.author }}</p>
-                        <p>{{ book.publisher }}</p>
+                        <p style="color: whitesmoke;">Title: {{ book.title }}</p>
+                        <p style="color: whitesmoke;">Author: {{ book.author }}</p>
+                        <p style="color: whitesmoke;">Publisher: {{ book.publisher }}</p>
                     </div>
                 </div>
             {% endfor %}
