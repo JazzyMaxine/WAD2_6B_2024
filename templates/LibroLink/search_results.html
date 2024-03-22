@@ -1,0 +1,24 @@
+{% extends 'LibroLink/base.html' %}
+
+{% block title_block %}
+Search Results
+{% endblock %}
+
+{% block body_block %}
+<div class="container">
+    <h1>Search Results</h1>
+    {% if books %}
+        <ul>
+            {% for book in books %}
+                <li>
+                    <strong>{{ book.title }}</strong> by {{ book.author }} (ISBN: {{ book.isbn }})
+                    <p>{{ book.publisher }}</p>
+                    <!-- Other details you want to display -->
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No books found.</p>
+    {% endif %}
+</div>
+{% endblock %}

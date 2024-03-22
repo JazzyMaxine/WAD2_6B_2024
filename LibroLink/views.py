@@ -24,6 +24,8 @@ from .models import Reading, Read
 from datetime import datetime
 from django.contrib.auth.decorators import login_required
 from .forms import BookSubmissionForm
+from django.db.models import Q
+from django.shortcuts import render
 
 User = get_user_model()
 
@@ -304,7 +306,12 @@ def show_category(request, category_name_slug):
 def book_search(request):
     query = request.GET.get('searchQuery') 
     if query:
-        books = Book.objects.filter(title__icontains=query)
+        books = Book.objects.filter(
+            Q(isbn__icontains=query) | 
+            Q(title__icontains=query) |
+            Q(author__icontains=query) |
+            Q(publisher__icontains=query)
+        )
     else:
         books = None 
     return render(request, 'LibroLink/search_results.html', {'books': books})
@@ -376,7 +383,7 @@ def public_profile(request, username):
     user = get_object_or_404(User, username=username)
     
     user_profile = get_object_or_404(UserProfile, user=user)
-    
+
     context = {'user': user, 'user_profile': user_profile}
     return render(request, 'LibroLink/publicProfile.html', context)
 
