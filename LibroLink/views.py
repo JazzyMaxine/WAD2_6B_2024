@@ -1,6 +1,11 @@
+
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, JsonResponse
 from LibroLink.models import Book, BookCategory, Category
+from django.shortcuts import render,get_object_or_404
+from django.http import HttpResponse
+from LibroLink.models import Book,BookCategory, Page, Featured
+from LibroLink.models import Category
 from LibroLink.forms import UserForm,UserProfileForm
 from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.contrib.auth.decorators import login_required
@@ -17,9 +22,10 @@ from django.views.generic.edit import UpdateView
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from LibroLink.models import Friends, FriendRequest, UserProfile, User
+from django.db.models import Count
+from LibroLink.models import Friends
 
 User = get_user_model()
-
 
 # Create your views here.
 def index(request):
@@ -254,5 +260,13 @@ def book_detail(request, book_id):
     return render(request, 'LibroLink/book_detail.html', {'book': book})
 
 def featured(request):
-    return render(request, 'LibroLink/featured.html')
-
+    pages = Page.objects.all().annotate(num_followers=Count('followers')).order_by('num_followers')[:5]
+    books = {}
+    for featured in Featured.objects.all():
+        if featured.page in pages:
+            if not books.has_key(featured.page):
+                books[featured.page] = []
+            books[featured.page].append(featured.book)
+    context = {'pages': pages,
+               'books': books}
+    return render(request, 'LibroLink/featured.html', context=context)
