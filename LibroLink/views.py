@@ -19,6 +19,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from LibroLink.models import Friends, FriendRequest, UserProfile, User
 from django.db.models import Count
 from LibroLink.forms import UserForm,UserProfileForm, AddFriendForm
+from LibroLink.forms import BookForm
 
 
 User = get_user_model()
@@ -229,7 +230,7 @@ def show_category(request, category_name_slug):
     return render(request, 'LibroLink/category.html', context=context_dict)
 
 
-def book_search(request):
+def search_results(request):
     query = request.GET.get('searchQuery') 
     if query:
         books = Book.objects.filter(title__icontains=query)
@@ -377,3 +378,13 @@ def public_profile(request, username):
     context = {'user': user, 'user_profile': user_profile}
     return render(request, 'LibroLink/publicProfile.html', context)
 
+
+def add_book(request):
+    if request.method == 'POST':
+        form = BookForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('books')
+    else:
+        form = BookForm()
+    return render(request, 'LibroLink/add_book.html', {'form': form})
