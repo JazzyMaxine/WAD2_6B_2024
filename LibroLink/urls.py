@@ -1,6 +1,7 @@
 from django.urls import path
 from LibroLink import views
 from .views import reviews, ReviewListView
+from .views import add_book
 
 
 app_name = 'LibroLink'
@@ -25,4 +26,7 @@ urlpatterns = [
     path('friends/', views.friends_list, name='friends_list'),
     path('add_friend/', views.add_friend, name='add_friend'),
     path('profile/<str:username>/', views.public_profile, name='user_profile'),
+    path('add_book/', views.add_book, name='add_book'),
+    path('thank_you/', views.thank_you, name='thank_you'),
+
 ]
