@@ -1,17 +1,18 @@
-<!DOCTYPE html>
+{% extends 'LibroLink/base.html' %}  
 {% load staticfiles %}
-<html lang="en">
-<head>
+
+{% block title_block %} 
     <link rel="stylesheet" type = "text/css" href="{% static 'LibroLink/css/profilePageStyles.css' %}">
     <title>Profile</title>
-</head>
-<body>
+{% endblock %} 
+
+{% block body_block %}
     
     <div id="topLogoDiv">
         {% if user_profile.picture %}
             <img src="{{ user_profile.picture.url }}" alt="Profile Picture" id="mainImage">
         {% else %}
-            <img src="{% static '\images\placeholderUserIcon.jpg' %}" alt="Default Profile Picture" class="mainProfileImage" id="mainImage">
+            <img src="{% static '\images\userProfileIcon.png' %}" alt="Default Profile Picture" class="mainProfileImage" id="mainImage">
         {% endif %}
 
         <h1 id="mainUsername">{{ user_profile.user.username }}</h1>
@@ -30,5 +31,4 @@
     
     </div>
     
-</body>
-</html>
+{% endblock %} 
