@@ -1,9 +1,5 @@
 from django.contrib import admin
 from LibroLink.models import UserProfile
-
-# Register your models here.
-admin.site.register(UserProfile)
-
 from LibroLink.models import Category
 from LibroLink.models import Book
 from LibroLink.models import BookCategory
