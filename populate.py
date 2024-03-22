@@ -148,33 +148,48 @@ def add_friend(a, b, date):
         return None
 
 def add_friend_request(a, b, status, date):
-    frq = FriendRequest.objects.get_or_create(sender=User.objects.filter(username = a)[0], recipient=User.objects.filter(username = b)[0], status=FriendRequest.STATUS_CHOICES[0], timestamp=date)[0]
-    frq.save()
-    return frq
+    try:
+        frq = FriendRequest.objects.get_or_create(sender=User.objects.filter(username = a)[0], recipient=User.objects.filter(username = b)[0], timestamp=date)[0]
+        frq.save()
+        return frq
+    except:
+        return None
 
 def add_book(isbn, title, author, publisher):
-    b = Book.objects.get_or_create(isbn = isbn)[0]
-    b.title = title
-    b.author = author
-    b.publisher = publisher
-    b.save()
-    return b
+    try:
+        b = Book.objects.get_or_create(isbn = isbn)[0]
+        b.title = title
+        b.author = author
+        b.publisher = publisher
+        b.save()
+        return b
+    except:
+        return None
 
 def add_user_profile(username):
-    u = UserProfile.objects.get_or_create(user = User.objects.filter(username = username)[0])[0]
-    u.save()
-    return u
+    try:
+        u = UserProfile.objects.get_or_create(user = User.objects.filter(username = username)[0])[0]
+        u.save()
+        return u
+    except:
+        return None
 
 
 def add_reading(username, book):
-    r = Reading.objects.get_or_create(user=User.objects.filter(username = username)[0], book=Book.objects.filter(isbn=book)[0])[0]
-    r.save()
-    return r
+    try:
+        r = Reading.objects.get_or_create(user=User.objects.filter(username = username)[0], book=Book.objects.filter(isbn=book)[0])[0]
+        r.save()
+        return r
+    except:
+        return None
 
 def add_review(username, book, text, rating):
-    r = Review.objects.get_or_create(user=User.objects.filter(username = username)[0], book_name=Book.objects.filter(isbn=book)[0].title, book_author=Book.objects.filter(isbn=book)[0].author, review_text=text, rating=rating)[0]
-    r.save()
-    return r
+    try:
+        r = Review.objects.get_or_create(user=User.objects.filter(username = username)[0], book_name=Book.objects.filter(isbn=book)[0].title, book_author=Book.objects.filter(isbn=book)[0].author, review_text=text, rating=rating)[0]
+        r.save()
+        return r
+    except:
+        return None
 
 if __name__ == "__main__":
     populate()
