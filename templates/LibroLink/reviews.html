@@ -1,0 +1,36 @@
+{% extends 'LibroLink/base.html' %}
+
+{% block body_block %}
+  <h2>Submit a Book Review</h2>
+  <form id="review_form" method="post" action="/LibroLink/reviews/" enctype="multipart/form-data">
+      {% csrf_token %}
+      
+      <p>
+        <label for="id_book_name">Book Name:</label>
+        {{ form.book_name }}
+      </p>
+
+      <p>
+        <label for="id_book_author">Book Author:</label>
+        {{ form.book_author }}
+      </p>
+
+      <p>
+        <label for="id_review_text">Review Text:</label>
+        {{ form.review_text }}
+      </p>
+
+      <p>
+        <label for="rating">Rating:</label>
+        {{ form.rating }}
+      </p> 
+      
+
+      <p>
+        <label for="id_book_image">Book Image:</label>
+        {{ form.book_image }}
+      </p>
+
+      <button type="submit">Submit Review</button>
+  </form>
+{% endblock %}

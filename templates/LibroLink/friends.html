@@ -1,12 +1,14 @@
 {% csrf_token %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
+{% extends 'LibroLink/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Friends Page</title>
-</head>
-<body>
+{% endblock %}
+
+{% block body_block %}
     <h1>Friends</h1>
     <ul>
         {% for friend in friends %}
@@ -40,5 +42,4 @@
             });
         }
     </script>
-</body>
-</html>
+{% endblock %}

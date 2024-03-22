@@ -1,33 +1,23 @@
 {% extends 'LibroLink/base.html' %}
-{% load staticfiles %}
+{% load static %}
 
 {% block title_block %}
     Index
 {% endblock %}
-
 {% block body_block %}
-<nav class="container-fluid" style="background-color: #f5f5dc;">
-    <ul>
-        <li><strong>LibroLink Reading Platform</strong></li>
-    </ul>    
-    <ul>
-        <li><a href="{% url 'LibroLink:books' %}">Books</a></li>
-        <li><a href="{% url 'LibroLink:profile' %}" role="button">User Center</a></li>
-    </ul>
-</nav>
-
 <main class="container" style="background-color: #f5f5dc;">
     <div class="grid">
         <section>
             <h1>Welcome to LibroLink Reading Platform</h1>
             <p>Please start reading and share with your friends!</p>
+            <p><a href="{% url 'LibroLink:books' %}">My Books</a></p>
             <form action="{% url 'LibroLink:book_search' %}" method="get" class="search-bar">
                 <input type="text" id="searchQuery" name="searchQuery" placeholder="Search for books..." aria-label="Search books" required>
                 <button type="submit">Search</button>
             </form>
             <figure>
-                <img src="{% static 'images/index.jpg' %}" alt="Picture of Books" style="width: 100%; max-width: 400px; height: auto;">
-                <figcaption><a href="/book/best/" target="_blank">Discover the Best Books!</a></figcaption>
+                <img src="{% static 'images/books.jpg' %}" alt="Picture of Books" style="width: 100%; max-width: 400px; height: auto;">
+                <figcaption><a href="{% url 'LibroLink:featured' %}" target="_blank">Discover the Best Books!</a></figcaption>
             </figure>
         </section>
     </div>
