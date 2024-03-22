@@ -1,16 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Friend</title>
-</head>
-<body>
+{% extends 'LibroLink/base.html' %}
+{% load static %}
+
+{% block title_block %}
+    Add Friend
+{% endblock %}
+{% block body_block %}
     <h1>Add Friend</h1>
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit">Add Friend</button>
+        <button type="submit">Send Request</button>
     </form>
-</body>
-</html>
+{% endblock %}

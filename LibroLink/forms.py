@@ -1,6 +1,10 @@
 from django import forms
 from django.contrib.auth.models import User 
 from LibroLink.models import UserProfile, Review
+from LibroLink.models import Book, Reading, Read
+from LibroLink.models import BookCategory
+
+
 
 class UserForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput())
@@ -29,3 +33,14 @@ class ReviewForm(forms.ModelForm):
                 'max': 5,    
             }),
         }
+        
+class BookSubmissionForm(forms.ModelForm):
+    READING_STATUS_CHOICES = [
+        ('reading', 'Reading'),
+        ('read', 'Read'),
+    ]
+    status = forms.ChoiceField(choices=READING_STATUS_CHOICES, label="Reading Status")
+
+    class Meta:
+        model = Book
+        fields = ('isbn', 'title', 'author', 'publisher', 'image', 'category')
