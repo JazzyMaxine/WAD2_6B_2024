@@ -96,7 +96,7 @@ class FriendRequest(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.sender} to {self.receipient}: {self.status}"
+        return f"{self.sender} to {self.recipient}: {self.status}"
     
 class Message(models.Model):
     sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name="message_sender")
