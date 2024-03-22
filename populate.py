@@ -7,6 +7,13 @@ django.setup()
 from LibroLink.models import *
 
 def populate():
+
+    book_categories = [
+        {
+            
+        }
+    ]
+
     books = [
         {
             'isbn':'9780450054655',
