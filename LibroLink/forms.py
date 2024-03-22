@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User 
-from LibroLink.models import UserProfile, Review
+from LibroLink.models import UserProfile, Review, Book
 
 class UserForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput())
@@ -26,3 +26,9 @@ class ReviewForm(forms.ModelForm):
                 'max': 5,    
             }),
         }
+
+
+class BookForm(forms.ModelForm):
+    class Meta:
+        model = Book
+        fields = ['isbn', 'title', 'author', 'publish_date', 'category', 'cover_image']       

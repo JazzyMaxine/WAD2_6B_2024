@@ -121,10 +121,11 @@ class BlogPost(models.Model):
     
 class BookCategory(models.Model):
     name = models.CharField(max_length=100, unique=True)
-    slug = models.SlugField(unique=True)
+    slug = models.SlugField(unique=True, blank=True)
 
     def save(self, *args, **kwargs):
-        self.slug = slugify(self.name)
+        if not self.slug:
+            self.slug = slugify(self.name)
         super(BookCategory, self).save(*args, **kwargs)
 
     def __str__(self):
@@ -134,8 +135,9 @@ class Book(models.Model):
     isbn = models.CharField(max_length = 13, unique = True)
     title = models.CharField(max_length = 200)
     author = models.CharField(max_length = 200)
-    publisher = models.CharField(max_length = 200)
-    category = models.ForeignKey(BookCategory, related_name='books', on_delete=models.CASCADE, null=True, blank=True)
+    publish_date = models.DateField()
+    category = models.ManyToManyField(BookCategory, related_name='books')
+    cover_image = models.ImageField(upload_to='book_covers/', blank=True, null=True)
 
     def __str__(self):
         return self.title

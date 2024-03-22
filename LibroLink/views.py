@@ -24,6 +24,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from LibroLink.models import Friends, FriendRequest, UserProfile, User
 from django.db.models import Count
 from LibroLink.models import Friends
+from .forms import BookForm
 
 
 User = get_user_model()
@@ -271,3 +272,14 @@ def featured(request):
     context = {'pages': pages,
                'books': books}
     return render(request, 'LibroLink/featured.html', context=context)
+
+
+def add_book(request):
+    if request.method == 'POST':
+        form = BookForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('books')
+    else:
+        form = BookForm()
+    return render(request, 'add_book.html', {'form': form})

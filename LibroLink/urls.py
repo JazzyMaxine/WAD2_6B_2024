@@ -1,6 +1,6 @@
 from django.urls import path
 from LibroLink import views
-from .views import reviews, ReviewListView
+from .views import reviews, ReviewListView, add_book
 
 
 app_name = 'LibroLink'
@@ -27,4 +27,5 @@ urlpatterns = [
     # path('settings/', views.accountSettings, name='settings'),
     path('friends/', views.friends_list, name='friends_list'),
     # path('category/<slug:category_name_slug>/', views.show_category, name='show_category'),
+    path('add_book/', add_book, name='add_book')
 ]

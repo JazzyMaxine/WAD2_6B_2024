@@ -1,0 +1,40 @@
+{% extends 'LibroLink/base.html' %}
+
+{% block body_block %}
+  <h2>Add a New Book</h2>
+  <form id="book_form" method="post" action="{% url 'LibroLink:add_book' %}" enctype="multipart/form-data">
+      {% csrf_token %}
+      
+      <p>
+        <label for="isbn">ISBN:</label>
+        {{ form.isbn }}
+      </p>
+
+      <p>
+        <label for="title">Title:</label>
+        {{ form.title }}
+      </p>
+
+      <p>
+        <label for="author">Author:</label>
+        {{ form.author }}
+      </p>
+
+      <p>
+        <label for="publish_date">Publish Date:</label>
+        {{ form.publish_date }}
+      </p> 
+
+      <p>
+        <label for="category">Categories:</label>
+        {{ form.category }}
+      </p>
+      
+      <p>
+        <label for="cover_image">Cover Image:</label>
+        {{ form.cover_image }}
+      </p>
+
+      <button type="submit">Add Book</button>
+  </form>
+{% endblock %}
