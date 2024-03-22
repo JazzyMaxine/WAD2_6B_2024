@@ -252,15 +252,8 @@ def book_detail(request, book_id):
     return render(request, 'LibroLink/book_detail.html', {'book': book})
 
 def featured(request):
-    pages = Page.objects.all().annotate(num_followers=Count('followers')).order_by('num_followers')[:5]
-    books = {}
-    for featured in Featured.objects.all():
-        if featured.page in pages:
-            if not books.has_key(featured.page):
-                books[featured.page] = []
-            books[featured.page].append(featured.book)
-    context = {'pages': pages,
-               'books': books}
+    books = Book.objects.all().annotate(num_readers=Count('reading')).order_by('num_readers')[:10]
+    context = {'books': books}
     return render(request, 'LibroLink/featured.html', context=context)
 
 # Create your views here.
