@@ -1,12 +1,12 @@
 {% extends 'LibroLink/base.html' %}
-{% load staticfiles %}
+{% load static %}
 
 {% block title_block %}
     Register
 {% endblock %}
 
 {% block body_block %}
-<h1>Register for 'insert application name'</h1>
+<h1>Register for 'LibroLink'</h1>
 {% if registered %}
 <strong>Thank you for registering!</strong>
 <a href="{% url 'LibroLink:index' %}">Return to the homepage</a><br />
@@ -16,7 +16,7 @@
     {% csrf_token %}
 
     {{ user_form.as_p }}
-    {{profile_form.as_p}}
+    {{ profile_form.as_p }}
 
     <input type="submit" name="submit" value="Register" />
 </form>

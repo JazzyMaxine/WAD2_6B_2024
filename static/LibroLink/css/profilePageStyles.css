@@ -1,0 +1,44 @@
+body {
+    background-color: #f5f5dc;
+    color: #333;
+}
+
+#mainImage {
+    display: block;
+    margin: 0 auto;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+}
+
+#mainUsername {
+    margin-top: -20px;
+}
+
+#topLogoDiv {
+    text-align: center;
+}
+
+#mainContentDiv {
+    margin: 3% auto;
+    width: 50%;
+    border-radius:20%;
+    background-color: white;
+    text-align: center;
+    height: 70%;
+    padding-bottom: 40px;
+}
+
+.profileValues {
+    margin: 0px;
+    display:inline;
+}
+
+.profileTitles {
+   margin-top: 50px;
+}
+
+.changeButtons {
+    opacity: 35%;
+    display:inline;
+}

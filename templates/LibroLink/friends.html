@@ -1,0 +1,21 @@
+{% csrf_token %}
+{% extends 'LibroLink/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Friends List</title>
+</head>
+<body>
+    <h1>Friends List</h1>
+    <ul>
+        {% for friend in friends_list %}
+            <li>{{ friend.username }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

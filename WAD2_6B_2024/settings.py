@@ -31,7 +31,7 @@ SECRET_KEY = 'q3y+2g&anm+p*-&j-h-!hc4na@h1au3-%9px*w_9nyo36vry@z'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['aaronlmcintyre255.pythonanywhere.com']
 
 
 # Application definition
@@ -124,9 +124,12 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
-STATICFILES_DIRS = [STATIC_DIR]
+STATICFILES_DIRS = [STATIC_DIR, ]
 STATIC_URL = '/static/'
 
 
 MEDIA_ROOT = MEDIA_DIR
 MEDIA_URL = '/media/'
+
+LOGIN_URL = 'LibroLink:login'
+
