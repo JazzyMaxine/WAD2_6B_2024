@@ -15,19 +15,13 @@
             <img src="{% static '\images\userProfileIcon.png' %}" alt="Default Profile Picture" class="mainProfileImage" id="mainImage">
         {% endif %}
 
-        <h1 id="mainUsername">{{ user_profile.user.username }}</h1>
+        <h1 id="mainUsername">You are logged in as {{ user_profile.user.username }}</h1>
     </div>
 
     <div id="mainContentDiv">
-
-    <h2 class ="profileTitles">Username: </h2> 
-    <h2 class ="profileValues">{{ user_profile.user.username }}</h2>
     
     <h2 class ="profileTitles">Email: </h2> 
     <h2 class ="profileValues">{{ user_profile.user.email }}</h2>
-    
-    <h2 class ="profileTitles">Password: </h2> 
-    <h2 class ="profileValues">***********</h2>
     
     </div>
     

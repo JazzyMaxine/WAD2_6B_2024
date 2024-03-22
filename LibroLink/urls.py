@@ -33,4 +33,7 @@ urlpatterns = [
     path('add_friend/', views.add_friend, name='add_friend'),
     path('friend_requests/', views.friend_requests, name='friend_requests'),
     path('user_not_found/<str:username>/', views.user_not_found, name='user_not_found'),
+    path('accept_request/<int:request_id>/', views.accept_request, name='accept_request'),
+    path('reject_request/<int:request_id>/', views.reject_request, name='reject_request'),
 ]
+

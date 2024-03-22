@@ -265,14 +265,20 @@ def friends_list(request):
     try:
         user_profile = UserProfile.objects.get(user=request.user)
         friends = Friends.objects.filter(Q(userA=user_profile.user) | Q(userB=user_profile.user))
-        friends_list = []
+        friends_set = set()
         for friend in friends:
             if friend.userA == user_profile.user:
-                friends_list.append(friend.userB)
+                friends_set.add(friend.userB)
             else:
-                friends_list.append(friend.userA)
+                friends_set.add(friend.userA)
+
+        friends_list = list(friends_set)
+
+        pending_requests = FriendRequest.objects.filter(recipient=request.user, status='pending')
+
         context = {
-            'friends_list': friends_list
+            'friends_list': friends_list,
+            'pending_requests': pending_requests,
         }
     except ObjectDoesNotExist:
         context = {'friends_list': []}
@@ -310,6 +316,24 @@ def user_not_found(request, username):
 def friend_requests(request):
     received_requests = FriendRequest.objects.filter(recipient=request.user, status='pending')
     return render(request, 'LibroLink/friend_requests.html', {'received_requests': received_requests})
+
+def accept_request(request, request_id):
+    friend_request = get_object_or_404(FriendRequest, id=request_id, recipient=request.user)
+    friend_request.status = 'accepted'
+    friend_request.save()
+
+    Friends.objects.create(userA=friend_request.sender, userB=request.user)
+    Friends.objects.create(userA=request.user, userB=friend_request.sender)
+
+    messages.success(request, 'Friend request accepted.')
+    return redirect('LibroLink:friends_list')
+
+def reject_request(request, request_id):
+    friend_request = get_object_or_404(FriendRequest, id=request_id, recipient=request.user)
+    friend_request.status = 'rejected'
+    friend_request.save()
+    messages.success(request, 'Friend request rejected.')
+    return redirect('LibroLink:friends_list')
 
 def public_profile(request, username):
     # Get the User object based on the provided username

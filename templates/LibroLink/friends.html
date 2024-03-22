@@ -6,10 +6,27 @@
 {% endblock %} 
 
 {% block body_block %} 
-    <h1>Friends</h1>
+    <h1>Friends:</h1>
     <ul>
         {% for friend in friends_list %}
             <li>{{ friend.username }}</li>
+        {% endfor %}
+    </ul>
+    <h2>Pending Friend Requests:</h2>
+    <ul>
+        {% for request in pending_requests %}
+            <li>{{ request.sender.username }} 
+                <form action="{% url 'LibroLink:accept_request' request.id %}" method="post" style="display: inline;">
+                    {% csrf_token %}
+                    <button type="submit">Accept</button>
+                </form>
+                <form action="{% url 'LibroLink:reject_request' request.id %}" method="post" style="display: inline;">
+                    {% csrf_token %}
+                    <button type="submit">Reject</button>
+                </form>
+            </li>
+        {% empty %}
+            <li>No pending friend requests.</li>
         {% endfor %}
     </ul>
 
