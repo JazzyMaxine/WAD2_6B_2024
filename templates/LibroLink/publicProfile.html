@@ -3,10 +3,12 @@
 <html lang="en">
 <head>
     <link rel="stylesheet" type = "text/css" href="{% static 'LibroLink/css/profilePageStyles.css' %}">
-    <title>Profile</title>
+    <meta charset="UTF-8">
+    <title>User Profile</title>
 </head>
+
 <body>
-    
+
     <div id="topLogoDiv">
         {% if user_profile.picture %}
             <img src="{{ user_profile.picture.url }}" alt="Profile Picture" id="mainImage">
@@ -17,18 +19,5 @@
         <h1 id="mainUsername">{{ user_profile.user.username }}</h1>
     </div>
 
-    <div id="mainContentDiv">
-
-    <h2 class ="profileTitles">Username: </h2> 
-    <h2 class ="profileValues">{{ user_profile.user.username }}</h2>
-    
-    <h2 class ="profileTitles">Email: </h2> 
-    <h2 class ="profileValues">{{ user_profile.user.email }}</h2>
-    
-    <h2 class ="profileTitles">Password: </h2> 
-    <h2 class ="profileValues">***********</h2>
-    
-    </div>
-    
 </body>
 </html>
