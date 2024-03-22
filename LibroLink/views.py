@@ -372,3 +372,7 @@ def add_book(request):
 @login_required
 def thank_you(request):
     return render(request, 'LibroLink/thank_you.html')
+
+def books(request):
+    all_books = Book.objects.all().order_by('title')  
+    return render(request, 'LibroLink/library.html', {'books': all_books})

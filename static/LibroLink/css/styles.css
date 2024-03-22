@@ -229,3 +229,30 @@ footer li {
     background-color: #0069d9;
     border-color: #0062cc;
 }
+
+/* Library Page */
+
+.book-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 20px;
+}
+
+.book-item {
+    flex-basis: 20%; 
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 8px;
+    background: #fff;
+}
+
+.book-item h3 {
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.book-item p {
+    font-size: 0.9em;
+    color: #666;
+}
