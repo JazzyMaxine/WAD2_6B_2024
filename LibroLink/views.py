@@ -19,6 +19,13 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from LibroLink.models import Friends, FriendRequest, UserProfile, User
 from django.db.models import Count
 from LibroLink.forms import UserForm,UserProfileForm, AddFriendForm
+from .forms import BookSubmissionForm
+from .models import Reading, Read
+from datetime import datetime
+from django.contrib.auth.decorators import login_required
+from .forms import BookSubmissionForm
+from django.db.models import Q
+from django.shortcuts import render
 
 User = get_user_model()
 
@@ -292,7 +299,12 @@ def show_category(request, category_name_slug):
 def book_search(request):
     query = request.GET.get('searchQuery') 
     if query:
-        books = Book.objects.filter(title__icontains=query)
+        books = Book.objects.filter(
+            Q(isbn__icontains=query) | 
+            Q(title__icontains=query) |
+            Q(author__icontains=query) |
+            Q(publisher__icontains=query)
+        )
     else:
         books = None 
     return render(request, 'LibroLink/search_results.html', {'books': books})
@@ -361,11 +373,32 @@ def add_friend(request):
     return render(request, 'LibroLink/add_friend.html', {'form': form})
 
 def public_profile(request, username):
-    # Get the User object based on the provided username
     user = get_object_or_404(User, username=username)
     
-    # Get the associated UserProfile using the OneToOneField 'user'
     user_profile = get_object_or_404(UserProfile, user=user)
-    
+
     context = {'user': user, 'user_profile': user_profile}
     return render(request, 'LibroLink/publicProfile.html', context)
+
+@login_required
+def add_book(request):
+    if request.method == 'POST':
+        form = BookSubmissionForm(request.POST, request.FILES)
+        if form.is_valid():
+            book = form.save(commit=False)
+            book.user = request.user  
+            book.save()  
+            status = form.cleaned_data['status']
+            if status == 'reading':
+                Reading.objects.create(user=request.user, book=book)
+            else:  
+                Read.objects.create(user=request.user, book=book, dateFinished=datetime.now())
+            return redirect('LibroLink:thank_you')  
+    else:
+        form = BookSubmissionForm()
+    return render(request, 'LibroLink/add_book.html', {'form': form})
+
+
+@login_required
+def thank_you(request):
+    return render(request, 'LibroLink/thank_you.html')

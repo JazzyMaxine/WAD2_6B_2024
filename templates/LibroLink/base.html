@@ -17,6 +17,7 @@
             <ul>
             <li><a href="{% url 'LibroLink:index' %}"><h2>LibroLink</h2></a></li>
             <h2>{{ page.name }}</h2>
+            <li><a href="{% url 'LibroLink:add_book' %}">Add Book</a></li>
             <li><a href="{% url 'LibroLink:review-list' %}">Reviews</a></li>
             {% if user.is_authenticated %}
             <li><a href="{% url 'LibroLink:friends_list' %}">
