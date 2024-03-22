@@ -22,7 +22,7 @@ urlpatterns = [
     path('books/', views.books, name='books'),
     path('books/<int:book_id>/', views.book_detail, name='book_detail'),
     path('featured/', views.featured, name='featured'),
-    path('friends/', views.friends_list_list, name='friends_list'),
+    path('friends/', views.friends_list, name='friends_list'),
     path('add_friend/', views.add_friend, name='add_friend'),
     path('profile/<str:username>/', views.public_profile, name='user_profile'),
 ]
