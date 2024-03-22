@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User 
-from LibroLink.models import UserProfile
+from LibroLink.models import UserProfile, Review
 
 class UserForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput())
@@ -12,4 +12,17 @@ class UserForm(forms.ModelForm):
 class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
-        fields = ('picture',)
+        fields = ('website', 'picture',)
+        
+class ReviewForm(forms.ModelForm):
+    
+    class Meta:
+        model = Review
+        fields = ('book_name', 'book_author', 'review_text', 'rating', 'book_image')
+        widgets = {
+            'rating': forms.NumberInput(attrs={
+                'step': 0.5,
+                'min': 0,    
+                'max': 5,    
+            }),
+        }

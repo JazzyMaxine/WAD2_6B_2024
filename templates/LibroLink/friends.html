@@ -1,0 +1,45 @@
+{% csrf_token %}
+{% extends 'LibroLink/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Friends Page</title>
+{% endblock %}
+
+{% block body_block %}
+    <h1>Friends</h1>
+    <ul>
+        {% for friend in friends %}
+            <li>{{ friend.username }} <button onclick="addFriend()">Add Friend</button></li>
+        {% endfor %}
+    </ul>
+
+    <script>
+        function addFriend(friendId) {
+            fetch(`/add_friend/${friendId}/`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}',
+                    'Content-Type': 'application/json'
+                },
+                credentials: 'same-origin',
+                body: JSON.stringify({})
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Friend added successfully!');
+                    location.reload(); 
+                } else {
+                    alert('Failed to add friend: ' + data.error);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred while adding friend');
+            });
+        }
+    </script>
+{% endblock %}
