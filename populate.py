@@ -1,5 +1,7 @@
 import os
-import datetime
+from datetime import datetime
+from django.utils import timezone
+import pytz
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'WAD2_6B_2024.settings')
 
 import django
@@ -7,6 +9,13 @@ django.setup()
 from LibroLink.models import *
 
 def populate():
+
+    book_categories = [
+        {
+            
+        }
+    ]
+
     books = [
         {
             'isbn':'9780450054655',
@@ -25,238 +34,162 @@ def populate():
             'title':'The Great Gatsby',
             'author':'F. Scott Fitzgerald',
             'publisher':'Penguin Classics'
-        }
-    ]
-
-    user_profiles = [
-        {
-            'user':'lucas'
         },
         {
-            'user':'nathan'
-        }
-    ]
-
-    pages = [
-        {
-            'uniqueID':'1',
-            'name':'Books that cure my motion sickness',
-            'admin':'lucas'
+            'isbn':'9781087964669',
+            'title':'The Great Gatsby: But Nick has Scoliosis',
+            'author':'Dick Cody Heese',
+            'publisher':'Dick Cody Heese'
         },
         {
-            'uniqueID':'2',
-            'name':'Every book is just a remix of the dictionary',
-            'admin':'nathan'
+            'isbn':'9780385339032',
+            'title':'Screenplay: The Foundations of Screenwriting',
+            'author':'Syd Field',
+            'publisher':'Random House Publishing Group'
         }
     ]
 
-    contributors = [
+    users = [
         {
-            'user':'lucas',
-            'page':'1'
+            'username':'SaulGoodman',
+            'password':'b3tt3rc4lls4ul',
         },
         {
-            'user':'nathan',
-            'page':'2'
-        }
-    ]
-
-    followers = [
-        {
-            'user':'nathan',
-            'page':'1'
-        }
-    ]
-
-    friends = [
-        {
-            'userA':'lucas',
-            'userB':'nathan'
-        }
-    ]
-
-    messages = [
-        {
-            'sender':'lucas',
-            'receiver':'nathan',
-            'timeSent':datetime(2023,3,20,12,5,57,5555),
-            'content':'Are we real?'
+            'username':'RustCohle',
+            'password':'t1me1s4fl4tc1rcle',
         },
         {
-            'sender':'nathan',
-            'receiver':'lucas',
-            'timeSent':datetime(2023,3,20,12,6,57,4563),
-            'content':'No, we are merely vessels for example data. Sorry.'
+            'username':'ClarkKent',
+            'password':'n0tSup3rman',
         },
         {
-            'sender':'lucas',
-            'receiver':'nathan',
-            'timeSent':datetime(2023,3,20,12,7,57,7643),
-            'content':'Shame.'
-        }
-    ]
-
-    blogPosts = [
-        {
-            'user':'lucas',
-            'page':'1',
-            'timePosted':datetime(2023,3,20,12,7,57,7643),
-            'content':'Ever heard of cheese? Good stuff. You can get yellow cheese, white cheese, blue cheese, red cheese. Probably purple cheese if you look close enough. Man, cheese is good.'
+            'username':'SarahConnor',
+            'password':'n0Futur3butwh4tw3m4k3f0r0urs3lv3s',
         },
         {
-            'user':'nathan',
-            'page':'2',
-            'timePosted':datetime(2023,3,20,12,6,57,4563),
-            'content':'I am afraid of big bugs. They keep bothering me.'
-        }
-    ]
-
-    featureds = [
-        {
-            'book':'9780450054655',
-            'page':'1'
-        },
-        {
-            'book':'9780141182636',
-            'page':'2'
+            'username':'AnakinSkywalker',
+            'password':'j3d1ord3r'
         }
     ]
 
     readings = [
         {
-            'user':'lucas',
-            'book':'9780141182636'
+            'user':'RustCohle',
+            'book':'9780450054655',
         },
-        {
-            'user':'nathan',
-            'book':'9780450054655'
-        }
-    ]
-
-    reads = [
-        {
-            'user':'lucas',
-            'book':'9780141439471',
-            'dateFinished':datetime(2023,3,20,12,6,57,4563)
-        }
     ]
 
     reviews = [
         {
-            'reviewer':'lucas',
-            'book':'9780141439471',
-            'rating':'5',
-            'content':'Wow, he really could have just not done that, huh.'
-        },
-        {
-            'reviewer':'nathan',
-            'book':'9780141182636',
-            'rating':'4',
-            'content':'Muppets version when?'
-        },
-        {
-            'reviewer':'nathan',
+            'user':'AnakinSkywalker',
             'book':'9780450054655',
-            'rating':'1',
-            'content':'Not enough sand.'
+            'text':'Too much sand.',
+            'rating':1
+        },
+        {
+            'user':'SaulGoodman',
+            'book':'9780141439471',
+            'text':'Wow, he could have just not done all that, huh.',
+            'rating':4
+        }
+    ]
+
+    friends = [
+        {
+            'a':'ClarkKent',
+            'b':'SarahConnor',
+            'date':datetime(2023,3,20,12,6,57,4563, tzinfo=pytz.UTC),
         },
     ]
 
+    friend_requests = [
+        {
+            'a':'SaulGoodman',
+            'b':'RustCohle',
+            'date':datetime(2023,3,20,12,6,57,4563, tzinfo=pytz.UTC),
+            'status':'pending'
+        },
+    ]
 
-    for book in books.items():
+    for user in users:
+        u = add_user(user['username'], user['password'])
+
+    for friend in friends:
+        f = add_friend(friend['a'], friend['b'], friend['date'])
+
+    for friend_request in friend_requests:
+        frq = add_friend_request(friend_request['a'], friend_request['b'], friend_request['status'], friend_request['date'])
+
+    for book in books:
         b = add_book(book['isbn'], book['title'], book['author'], book['publisher'])
-
-    for page in pages.items():
-        p = add_page(page['uniqueID'], page['name'], page['admin'])
-
-    for contributor in contributors.items():
-        c = add_contributor(contributor['user'], contributor['page'])
-
-    for follower in follower.items():
-        f = add_followers(follower['user'], follower['page'])
-
-    for friend in friends.items():
-        f = add_friends(friend['userA'], friend['userB'])
-
-    for message in messages.items():
-        m = add_messages(message['sender'], message['receiver'], message['timeSent'], message['content'])
-
-    for blogPost in blogPosts.items():
-        b = add_blog_post(blogPost['user'], blogPost['page'], blogPost['timePosted'], blogPost['content'])
-
-    for featured in featureds.items():
-        f = add_featured(featured['book'], featured['page'])
-
-    for reading in readings.items():
+    
+    for reading in readings:
         r = add_reading(reading['user'], reading['book'])
+    
+    for review in reviews:
+        r = add_review(review['user'], review['book'], review['text'], review['rating'])
 
-    for read in reads.items():
-        r = add_read(read['user'], read['book'], read['dateFinished'])
+def add_user(name, password):
+    try:
+        u = User.objects.create_user(
+            username=name,password=password
+        )
+        u.save()
+        return u
+    except:
+        return None
 
-    for review in reviews.items():
-        r = add_review(review['reviewer'], review['book'], review['rating'], review['content'])
+def add_friend(a, b, date):
+    try:
+        f = Friends.objects.get_or_create(userA = User.objects.filter(username = a)[0], userB = User.objects.filter(username = b)[0], date_established=date)[0]
+        f.save()
+        return f
+    except:
+        return None
 
-    def add_book(isbn, title, author, publisher):
+def add_friend_request(a, b, status, date):
+    try:
+        frq = FriendRequest.objects.get_or_create(sender=User.objects.filter(username = a)[0], recipient=User.objects.filter(username = b)[0], timestamp=date)[0]
+        frq.save()
+        return frq
+    except:
+        return None
+
+def add_book(isbn, title, author, publisher):
+    try:
         b = Book.objects.get_or_create(isbn = isbn)[0]
         b.title = title
         b.author = author
         b.publisher = publisher
         b.save()
         return b
-    
-    def add_page(uniqueID, name, admin):
-        p = Page.objects.get_or_create(uniqueID = uniqueID)[0]
-        p.name = name
-        p.admin = admin
-        p.save()
-        return p
-    
-    def add_contributor(user, page):
-        c = Contributors.objects.get_or_create(user = User.objects.filter(username = user), page = Page.objects.filter(uniqueID = page))[0]
-        c.save()
-        return c
-    
-    def add_followers(user, page):
-        f = Followers.objects.get_or_create(user = User.objects.filter(username = user), page = Page.objects.filter(uniqueID = page))[0]
-        f.save()
-        return f
+    except:
+        return None
 
-    def add_friends(userA, userB):
-        f = Friends.objects.get_or_create(userA = User.objects.filter(username = userA), userB = User.objects.filter(username = userB))[0]
-        f.save()
-        return f
-    
-    def add_messages(sender, receiver, timeSent, content):
-        m = Message.objects.get_or_create(sender = User.objects.filter(username = sender), receiver = User.objects.filter(username = receiver), timeSent = timeSent)[0]
-        m.content = content
-        m.save()
-        return m
-    
-    def add_blog_post(user, page, timePosted, content):
-        b = BlogPost.objects.get_or_create(user = User.objects.filter(username = user), page = Page.objects.filter(uniqueID = page), timePosted = timePosted)[0]
-        b.content = content
-        b.save()
-        return b
-    
-    def add_featured(book, page):
-        f = Featured.objects.get_or_create(book = Book.objects.filter(isbn = book), page = Page.objects.filter(uniqueID = page))[0]
-        f.save()
-        return f
-    
-    def add_reading(user, book):
-        r = Reading.objects.get_or_create(user = User.objects.filter(username = user), book = Book.objects.filter(isbn = book))[0]
+def add_user_profile(username):
+    try:
+        u = UserProfile.objects.get_or_create(user = User.objects.filter(username = username)[0])[0]
+        u.save()
+        return u
+    except:
+        return None
+
+
+def add_reading(username, book):
+    try:
+        r = Reading.objects.get_or_create(user=User.objects.filter(username = username)[0], book=Book.objects.filter(isbn=book)[0])[0]
         r.save()
         return r
-    
-    def add_read(user, book, dateFinished):
-        r = Read.objects.get_or_create(user = User.objects.filter(username = user), book = Book.objects.filter(isbn = book), dateFinished = dateFinished)[0]
+    except:
+        return None
+
+def add_review(username, book, text, rating):
+    try:
+        r = Review.objects.get_or_create(user=User.objects.filter(username = username)[0], book_name=Book.objects.filter(isbn=book)[0].title, book_author=Book.objects.filter(isbn=book)[0].author, review_text=text, rating=rating)[0]
         r.save()
         return r
-    
-    def add_review(reviewer, book, rating, content):
-        r = Review.objects.get_or_create(reviewer = User.objects.filter(username = reviewer), book = Book.objects.filter(isbn = book))[0]
-        r.rating = rating
-        r.content = content
-        r.save()
-        return r
-    
+    except:
+        return None
+
+if __name__ == "__main__":
+    populate()
